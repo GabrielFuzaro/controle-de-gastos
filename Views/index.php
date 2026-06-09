@@ -31,7 +31,7 @@ $total = $repository->somar();
             <div class="">
                 <form class="gap-3 flex flex-col" method="post" action="../Actions/salvar_gasto.php">
                     <h3>Descrição</h3>
-                    <input class="border-white w-full p-3 border text-center rounded-lg bg-gray-800" type="text" name="descricao required">
+                    <input class="border-white w-full p-3 border text-center rounded-lg bg-gray-800" type="text" name="descricao" required>
                     <h3>Categoria</h3>
                     <select class="bg-gray-800 w-full p-3 border border-white rounded-lg cursor-pointer" name="categoria">
                         <option>Alimentação</option>
