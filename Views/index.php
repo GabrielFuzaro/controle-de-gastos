@@ -1,3 +1,12 @@
+<?php 
+require "../config/conexao.php";
+require "../Repositories/GastoRepository.php"; 
+
+$repository = new GastoRepository($conn);
+$gastos = $repository->listar();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +54,17 @@
                             <th>Valor</th>
                             <th>Data</th>
                         </tr>
-                    </thead>    
+                    </thead>  
+                    <tbody>
+                        <?php foreach($gastos as $gasto): ?>
+                        <tr>
+                            <td><?= $gasto['descricao']; ?></td>
+                            <td><?= $gasto['categoria']; ?></td>
+                            <td><?= $gasto['valor'] ?></td>
+                            <td><?= $gasto['data_gasto'] ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>  
                 </table>
             </div>
         </div>

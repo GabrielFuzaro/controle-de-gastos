@@ -24,4 +24,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 }
 
+
+/**O fluxo inteiro em código mental salvar_gasto.php
+ * 
+require conexao.php;
+require Gasto.php;
+require GastoRepository.php;
+
+pega $_POST;
+
+cria $gasto = new Gasto(...);
+
+cria $repository = new GastoRepository($conn);
+
+$repository->salvar($gasto);
+Resumo do papel de cada um
+salvar_gasto.php
+= recebe o formulário
+Gasto.php
+= organiza os dados em um objeto
+GastoRepository.php
+= pega esse objeto e salva no banco
+conexao.php
+= cria a conexão $conn
+
+A frase chave é:
+
+O formulário manda dados soltos. O Model transforma em objeto. O Repository salva esse objeto no banco.
+ */
 ?>

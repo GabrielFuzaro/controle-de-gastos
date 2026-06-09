@@ -27,5 +27,15 @@ class GastoRepository
 
         return $stmt->execute();
     }
+
+    public function listar(){
+
+        $sql = "SELECT * FROM gastos
+        ORDER BY data_gasto DESC, id DESC";
+
+        $resultado = mysqli_query($this->conn, $sql);
+
+        return $resultado->fetch_all(MYSQLI_ASSOC);
+    }
 }
 ?>
