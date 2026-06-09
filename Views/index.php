@@ -51,7 +51,7 @@ $total = $repository->somar();
         </div>
         <div class="bg-gray-900 w-1/3 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl mt-5 mb-5">
          <div class="h-auto bg-gray-900 w-f1/3 mt-3">
-                <table class="w-[500px] text-center">
+                <table class="w-[460px] text-center">
                     <thead>
                         <tr>
                             <th>Excluir</th>
