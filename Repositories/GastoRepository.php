@@ -37,5 +37,23 @@ class GastoRepository
 
         return $resultado->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function somar(){
+        $sql = "SELECT sum(valor) AS total from gastos;";
+
+        $resultado = mysqli_query($this->conn, $sql);
+
+        $linha = mysqli_fetch_assoc($resultado);
+
+        return (float) $linha['total'];
+    }
+    public function excluir($id){
+        $sql = "DELETE FROM gastos
+        WHERE id = $id";
+
+        $resultado = mysqli_query($this->conn, $sql);
+
+        return $resultado;
+    }
 }
 ?>

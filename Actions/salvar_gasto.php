@@ -6,6 +6,7 @@ require_once '../Repositories/GastoRepository.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+    $id = $_POST['id'];
     $descricao = trim($_POST['descricao']);
     $categoria = trim($_POST['categoria']);
     $valor = (float) $_POST['valor'];

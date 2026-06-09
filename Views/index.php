@@ -4,6 +4,7 @@ require "../Repositories/GastoRepository.php";
 
 $repository = new GastoRepository($conn);
 $gastos = $repository->listar();
+$total = $repository->somar();
 
 ?>
 
@@ -22,33 +23,38 @@ $gastos = $repository->listar();
     <main class="flex flex-1 flex-col justify-center items-center bg-gray-800 text-white">
         <div class="bg-gray-900 w-1/3 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl my-5">
             <div class="flex flex-col">
-                <h2 class="text-2xl font-bold">Total gasto</h2>
-                <p class="text-5xl font-bold text-green-400">R$ 0,00</p>
+                <h2 class="text-2xl font-bold">TOTAL GASTO</h2>
+                <p class="text-5xl font-bold text-green-400"><?= "R$" . $total?></p>
             </div>
         </div>
         <div class="bg-gray-900 w-1/3 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
             <div class="">
                 <form class="gap-3 flex flex-col" method="post" action="../Actions/salvar_gasto.php">
                     <h3>Descrição</h3>
-                    <input class="border-white w-full p-3 border-1 text-center rounded-lg bg-gray-800" type="text" name="descricao">
+                    <input class="border-white w-full p-3 border text-center rounded-lg bg-gray-800" type="text" name="descricao required">
                     <h3>Categoria</h3>
-                    <select class="bg-gray-800 w-full p-3 border border-white rounded-lg" name="categoria">
-                        <option></option>
+                    <select class="bg-gray-800 w-full p-3 border border-white rounded-lg cursor-pointer" name="categoria">
+                        <option>Alimentação</option>
+                        <option>Transporte</option>
+                        <option>Investimentos</option>
+                        <option>Minhas Coisas</option>
+                        <option>Presentes</option>
                     </select>
                     <h3>Valor</h3>
-                    <input class="border-white w-full p-3 border-1 rounded-lg bg-gray-800" type="number" name="valor">
+                    <input class="border-white w-full p-3 border rounded-lg bg-gray-800" type="number" name="valor" required>
                     <h3>Data</h3>
-                    <input class="border-white w-full p-3 border-1 rounded-lg bg-gray-800 mb-3" type="date" name="data">
+                    <input class="border-white w-full p-3 border rounded-lg bg-gray-800 mb-3" type="date" name="data" required>
                     <br>
-                    <button class="w-full bg-blue-500 hover:bg-blue-100 text-white py-3 rounded-lg transition">Adicionar</button>
+                    <button class="w-full bg-blue-500 cursor-pointer font-bold text-2xl hover:bg-blue-400 text-white py-3 rounded-lg transition">Adicionar</button>
                 </form>
             </div>
         </div>
-        <div class="bg-gray-900 w-1/3 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl mt-5">
+        <div class="bg-gray-900 w-1/3 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl mt-5 mb-5">
          <div class="h-auto bg-gray-900 w-f1/3 mt-3">
-                <table class="w-full text-center">
+                <table class="w-[500px] text-center">
                     <thead>
                         <tr>
+                            <th>Excluir</th>
                             <th>Descrição</th>
                             <th>Categoria</th>
                             <th>Valor</th>
@@ -58,10 +64,18 @@ $gastos = $repository->listar();
                     <tbody>
                         <?php foreach($gastos as $gasto): ?>
                         <tr>
-                            <td><?= $gasto['descricao']; ?></td>
-                            <td><?= $gasto['categoria']; ?></td>
-                            <td><?= $gasto['valor'] ?></td>
-                            <td><?= $gasto['data_gasto'] ?></td>
+                            <td class="border border-white">
+                                <form method="post" action="../Actions/excluir_gasto.php">
+                                    <input type="hidden" name="id" value="<?= $gasto['id'] ?>">
+                                    <button class="cursor-pointer mt-1" type="submit">
+                                        <img src="../public/assets/img/delete_24dp_EA3323_FILL0_wght400_GRAD0_opsz24.png">
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="border border-white"><?= $gasto['descricao']; ?></td>
+                            <td class="border border-white"><?= $gasto['categoria']; ?></td>
+                            <td class="border border-white"><?= $gasto['valor'] ?></td>
+                            <td class="border border-white"><?= $gasto['data_gasto'] ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>  
