@@ -83,8 +83,8 @@ $total = $repository->somar();
             </div>
         </div>
     </main>
-    <footer class="bg-gray-900">
-        <p>eeu</p>
+    <footer class="bg-gray-900 py-1">
+        <p class="text-center text-gray-400">Feito por Gabriel Fuzaro no dia 09/06/2026</p>
     </footer>
 </body>
 </html>
