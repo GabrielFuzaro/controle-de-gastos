@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     $excluir = $repository->excluir($id);
 
-    header("Location: ../views/index.php");
+    header("Location: ../views/dashboard.php");
     exit;
 }
 

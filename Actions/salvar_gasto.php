@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $repostitory = new GastoRepository($conn);
 
     if($repostitory->salvar($gasto)){
-        header("Location: ../views/index.php");
+        header("Location: ../views/cadastrar_gasto.php");
         exit;
     }
 
