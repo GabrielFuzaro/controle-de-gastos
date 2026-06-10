@@ -55,5 +55,6 @@ class GastoRepository
 
         return $resultado;
     }
+
 }
 ?>
