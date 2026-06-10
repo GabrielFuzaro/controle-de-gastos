@@ -78,13 +78,34 @@ class GastoRepository
         return (float) $linha['total'];
     }
 
-    public function somarPorCategoria(){
-    $sql = "SELECT categoria, sum(valor) FROM gastos
-    GROUP BY categoria";
+    public function somarPorCategoriaMes($mes){
+
+     if ($mes) {
+        $sql = "SELECT categoria, SUM(valor) AS total 
+                FROM gastos
+                WHERE MONTH(data_gasto) = $mes
+                GROUP BY categoria";
+    } else {
+        $sql = "SELECT categoria, SUM(valor) AS total 
+                FROM gastos
+                GROUP BY categoria";
+    }
 
     $resultado = mysqli_query($this->conn, $sql);
 
-    return $resultado;
+    return $resultado->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function somarPorCategoria(){
+        
+    
+        $sql = "SELECT categoria, SUM(valor) AS total 
+                FROM gastos
+                GROUP BY categoria";
+
+    $resultado = mysqli_query($this->conn, $sql);
+
+    return $resultado->fetch_all(MYSQLI_ASSOC);
     }
 }
 ?>

@@ -35,9 +35,11 @@ $meses = [
 if ($mes) {
     $gastos = $repository->listarPorMes($mes);
     $total = $repository->somarPorMes($mes);
+    $gastosPorCategoria = $repository->somarPorCategoriaMes($mes);
 } else {
     $gastos = $repository->listar();
     $total = $repository->somar();
+    $gastosPorCategoria = $repository->somarPorCategoria();
 }
 
 ?>
@@ -55,91 +57,116 @@ if ($mes) {
         <h1 class="text-white font-bold text-center text-5xl">Controle de gastos</h1>
     </header>
     <main class="flex flex-1 flex-col justify-center items-center bg-gray-800 text-white">
-    <div>
         <div>
-            <h2 class="font-bold mt-2">Filtrar por mês</h2>
-        </div>
-        <div class="flex gap-2">
-            <img src="../public/assets/img/filtro.png">
-            <form method="GET" action="">
-                <select name="mes" class="bg-gray-800 text-white">
-                    <option value="" disabled <?= $mes == '' ? 'selected' : '' ?>>Mês</option>
-
-                    <?php foreach ($meses as $numero => $nome): ?>
-
-                            <option value="<?= $numero ?>"<?= $mes == $numero ? 'selected' : '' ?>>
-                                <?= $nome ?>
-                            </option>
-
-                    <?php endforeach; ?>
-
-                </select>
-                <button type="submit" class="mt-2 bg-gray-600 cursor-pointer font-bold text-lg text-center px-2 hover:bg-gray-500 text-white rounded-lg transition">Filtrar</button>
-            </form>
-        </div>
-    </div>
-    <div class="w-1/3">
-            <div class="bg-gray-900 h-auto flex gap-3 justify-center items-center px-10 py-8 rounded-3xl shadow-2xl my-5">
-                <div class="flex flex-col justify-center items-center">
-                    <div class="flex">
-                        <div>
-                            <h2 class="font-bold text-2xl">Reais</h2>
-                            <form method="post" action="">
-                                <input name="salario" type="number" class="border-white w-4/5 p-3 border rounded-lg bg-gray-800" required value="<?= $salario ?>">
-                                <br>
-                                <input type="submit" class="w-1/3 mt-2 bg-blue-500 cursor-pointer font-bold text-lg hover:bg-blue-400 text-white py-1 rounded-lg transition">
-                            </form>
-                        </div>
-                        <div class="flex flex-col">
-                            <h2 class="text-2xl font-bold">TOTAL GASTO</h2>
-                            <p class="text-5xl font-bold text-green-400"><?= "R$" . $total?></p>
-                        </div>
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-bold">Diferença</h2>
-                        <p class="text-red-500 text-lg font-bold"><?= "R$" . $salario - $total; ?></p>
-                    </div>
-                </div>
+            <div>
+                <h2 class="font-bold mt-2">Filtrar por mês</h2>
             </div>
-        
-            <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl mt-5 mb-5">
-            <div class="h-auto bg-gray-900 w-f1/3 mt-3">
-                    <table class="w-[420px] text-center">
-                        <thead>
-                            <tr>
-                                <th>Excluir</th>
-                                <th>Descrição</th>
-                                <th>Categoria</th>
-                                <th>Valor</th>
-                                <th>Data</th>
-                            </tr>
-                        </thead>  
-                        <tbody>
-                            <?php foreach($gastos as $gasto): ?>
-                            <tr>
-                                <td class="border border-white">
-                                    <form method="post" action="../Actions/excluir_gasto.php">
-                                        <input type="hidden" name="id" value="<?= $gasto['id'] ?>">
-                                        <button class="cursor-pointer mt-1" type="submit">
-                                            <img src="../public/assets/img/delete_24dp_EA3323_FILL0_wght400_GRAD0_opsz24.png">
-                                        </button>
+            <div class="flex gap-2">
+                <img src="../public/assets/img/filtro.png">
+                <form method="GET" action="">
+                    <select name="mes" class="bg-gray-800 text-white">
+                        <option value="" <?= $mes == '' ? 'selected' : '' ?>>Nenhum</option>
+
+                        <?php foreach ($meses as $numero => $nome): ?>
+
+                                <option value="<?= $numero ?>"<?= $mes == $numero ? 'selected' : '' ?>>
+                                    <?= $nome ?>
+                                </option>
+
+                        <?php endforeach; ?>
+
+                    </select>
+                    <button type="submit" class="mt-2 bg-gray-600 cursor-pointer font-bold text-lg text-center px-2 hover:bg-gray-500 text-white rounded-lg transition">Filtrar</button>
+                </form>
+            </div>
+        </div>
+        <div class="w-5/6 mt-6">
+            <div class="gap-6 grid grid-cols-2">
+                <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
+                        <div class="flex flex-col justify-center items-center">
+                            <div class="flex">
+                                <div>
+                                    <h2 class="font-bold text-2xl">Reais</h2>
+                                    <form method="post" action="">
+                                        <input name="salario" type="number" class="border-white w-4/5 p-3 border rounded-lg bg-gray-800" required value="<?= $salario ?>">
+                                        <br>
+                                        <input type="submit" class="w-1/3 mt-2 bg-blue-500 cursor-pointer font-bold text-lg hover:bg-blue-400 text-white py-1 rounded-lg transition">
                                     </form>
-                                </td>
-                                <td class="border border-white"><?= $gasto['descricao']; ?></td>
-                                <td class="border border-white"><?= $gasto['categoria']; ?></td>
-                                <td class="border border-white"><?= $gasto['valor'] ?></td>
-                                <td class="border border-white"><?= $gasto['data_gasto'] ?></td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>  
-                    </table>
-                </div>
+                                </div>
+                                <div class="flex flex-col">
+                                    <h2 class="text-2xl font-bold">TOTAL GASTO</h2>
+                                    <p class="text-5xl font-bold text-green-400"><?= "R$" . $total?></p>
+                                </div>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-bold">Diferença</h2>
+                                <p class="text-red-500 text-lg font-bold"><?= "R$" . $salario - $total; ?></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
+                        <h2 class="font-bold text-2xl">Gasto por categoria</h2>
+                        <div class="h-auto bg-gray-900 mt-3">
+                            <table class="w-[420px] text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Categoria</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>  
+                                <tbody>
+                                    <?php foreach($gastosPorCategoria as $categoria): ?>
+                                    <tr>
+                                        <td class="border border-white"><?= $categoria['categoria']; ?></td>
+                                        <td class="border border-white"><?= $categoria['total']; ?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>  
+                            </table>
+                        </div>
+                    </div>
+                
+                    <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
+                    <div class="h-auto bg-gray-900 mt-3">
+                            <table class="w-[420px] text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Excluir</th>
+                                        <th>Descrição</th>
+                                        <th>Categoria</th>
+                                        <th>Valor</th>
+                                        <th>Data</th>
+                                    </tr>
+                                </thead>  
+                                <tbody>
+                                    <?php foreach($gastos as $gasto): ?>
+                                    <tr>
+                                        <td class="border border-white">
+                                            <form method="post" action="../Actions/excluir_gasto.php">
+                                                <input type="hidden" name="id" value="<?= $gasto['id'] ?>">
+                                                <button class="cursor-pointer mt-1" type="submit">
+                                                    <img src="../public/assets/img/delete_24dp_EA3323_FILL0_wght400_GRAD0_opsz24.png">
+                                                </button>
+                                            </form>
+                                        </td>
+                                        <td class="border border-white"><?= $gasto['descricao']; ?></td>
+                                        <td class="border border-white"><?= $gasto['categoria']; ?></td>
+                                        <td class="border border-white"><?= $gasto['valor'] ?></td>
+                                        <td class="border border-white"><?= $gasto['data_gasto'] ?></td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>  
+                            </table>   
+                        </div>
+                    </div>
             </div>
+
+            <a href="./cadastrar_gasto.php">
+                <button class="bg-gray-700 mb-5 mt-5 cursor-pointer rounded-4xl py-3 px-6 font-bold  text-lg hover:bg-gray-900 text-white transition">Cadastrar Gasto</button>
+            </a>
             
-            <a href="./cadastrar_gasto.php" class="self-start">
-                    <button class="bg-gray-700 w-2/5 mb-5 cursor-pointer rounded-4xl py-3 font-bold  text-lg hover:bg-gray-900 text-white transition">Cadastrar Gasto</button>
-                </a>
-    </div>
+        </div>
     </main>
     <footer class="bg-gray-900 py-1">
         <p class="text-center text-gray-400">Feito por Gabriel Fuzaro no dia 09/06/2026</p>
