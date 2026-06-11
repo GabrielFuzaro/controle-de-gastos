@@ -187,6 +187,7 @@ $saldo = $salario - $total + $totalExtra;
                             <table class="w-[420px] text-center">
                                 <thead>
                                     <tr>
+                                        <th>Excluir</th>
                                         <th>Descrição</th>
                                         <th>Valor</th>
                                         <th>Data</th>
@@ -195,6 +196,14 @@ $saldo = $salario - $total + $totalExtra;
                                 <tbody>
                                     <?php foreach($extras as $extra): ?>
                                     <tr>
+                                        <td class="border border-white">
+                                            <form method="post" action="../Actions/excluir_extra.php">
+                                                <input type="hidden" name="id" value="<?= $extra['id'] ?>">
+                                                <button class="cursor-pointer mt-1" type="submit">
+                                                    <img src="../public/assets/img/delete_24dp_EA3323_FILL0_wght400_GRAD0_opsz24.png">
+                                                </button>
+                                            </form>
+                                        </td>
                                         <td class="border border-white"><?= $extra['descricao']; ?></td>
                                         <td class="border border-white"><?= $extra['valor'] ?></td>
                                         <td class="border border-white"><?= $extra['data_entrada'] ?></td>

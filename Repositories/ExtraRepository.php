@@ -59,5 +59,14 @@ class ExtraRepository{
 
         return (float) $linha['total'];
     }
+
+    public function excluir($id){
+        $sql = "DELETE FROM entradas
+        WHERE id = $id";
+
+        $resultado = mysqli_query($this->conn, $sql);
+
+        return $resultado;
+    }
 }
 ?>
