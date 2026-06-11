@@ -98,7 +98,6 @@ class GastoRepository
 
     public function somarPorCategoria(){
         
-    
         $sql = "SELECT categoria, SUM(valor) AS total 
                 FROM gastos
                 GROUP BY categoria";
@@ -107,5 +106,25 @@ class GastoRepository
 
     return $resultado->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function editarGasto(Gasto $gasto, $id){
+        $sql = "UPDATE gastos
+        SET descricao = '$gasto->descricao', categoria = '$gasto->categoria', valor = $gasto->valor, data_gasto = '$gasto->data_gasto'
+        WHERE id = $id";
+
+        $resultado = mysqli_query($this->conn, $sql);
+
+        return $resultado;
+    }
+
+    public function buscarPorId($id){
+        
+    $sql = "SELECT * FROM gastos
+            WHERE id = $id";
+
+    $resultado = mysqli_query($this->conn, $sql);
+
+    return mysqli_fetch_assoc($resultado);
+}
 }
 ?>

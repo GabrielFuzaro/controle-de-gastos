@@ -68,5 +68,25 @@ class ExtraRepository{
 
         return $resultado;
     }
+
+    public function editarExtra(Extra $extra, $id){
+        $sql = "UPDATE entradas
+        SET descricao = '$extra->descricao', valor = $extra->valor, data_entrada = '$extra->data_entrada'
+        WHERE id = $id";
+
+        $resultado = mysqli_query($this->conn, $sql);
+
+        return $resultado;
+    }
+
+    public function buscarPorId($id){
+        
+    $sql = "SELECT * FROM entradas
+            WHERE id = $id";
+
+    $resultado = mysqli_query($this->conn, $sql);
+
+    return mysqli_fetch_assoc($resultado);
+}
 }
 ?>

@@ -109,7 +109,7 @@ $saldo = $salario - $total + $totalExtra;
                             </div>
                             <div>
                                 <h2 class="text-2xl font-bold">Saldo</h2>
-                                <p class="text-blue-500 text-lg font-bold"><?= "R$" . $saldo; ?></p>
+                                <p class="text-blue-500 text-lg font-bold"><?= "R$" . $saldo - $total; ?></p>
                             </div>
                         </div>
                     </div>
@@ -138,7 +138,7 @@ $saldo = $salario - $total + $totalExtra;
                 
                     <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
                     <div class="h-auto bg-gray-900 mt-3">
-                            <table class="w-[420px] text-center">
+                            <table class="w-130 text-center">
                                 <thead>
                                     <tr>
                                         <th>Excluir</th>
@@ -146,6 +146,7 @@ $saldo = $salario - $total + $totalExtra;
                                         <th>Categoria</th>
                                         <th>Valor</th>
                                         <th>Data</th>
+                                        <th>Editar</th>
                                     </tr>
                                 </thead>  
                                 <tbody>
@@ -163,6 +164,13 @@ $saldo = $salario - $total + $totalExtra;
                                         <td class="border border-white"><?= $gasto['categoria']; ?></td>
                                         <td class="border border-white"><?= $gasto['valor'] ?></td>
                                         <td class="border border-white"><?= $gasto['data_gasto'] ?></td>
+                                        <td class="border border-white">
+                                            <a href="./editar_gasto.php?id=<?= $gasto['id'] ?>">
+                                                <button class="cursor-pointer mt-1">
+                                                    <img src="../public/assets/img/edit.png">
+                                                </button>
+                                            </a>
+                                        </td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>  
@@ -184,13 +192,14 @@ $saldo = $salario - $total + $totalExtra;
                     <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
                         <h2 class="text-4xl font-bold">Valores Extras</h2>
                     <div class="h-auto bg-gray-900 mt-3">
-                            <table class="w-[420px] text-center">
+                            <table class="w-110 text-center">
                                 <thead>
                                     <tr>
                                         <th>Excluir</th>
                                         <th>Descrição</th>
                                         <th>Valor</th>
                                         <th>Data</th>
+                                        <th>Editar</th>
                                     </tr>
                                 </thead>  
                                 <tbody>
@@ -207,6 +216,13 @@ $saldo = $salario - $total + $totalExtra;
                                         <td class="border border-white"><?= $extra['descricao']; ?></td>
                                         <td class="border border-white"><?= $extra['valor'] ?></td>
                                         <td class="border border-white"><?= $extra['data_entrada'] ?></td>
+                                        <td class="border border-white">
+                                            <a href="./editar_extra.php?id=<?= $extra['id'] ?>">
+                                                <button class="cursor-pointer mt-1">
+                                                    <img src="../public/assets/img/edit.png">
+                                                </button>
+                                            </a>
+                                        </td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>  
