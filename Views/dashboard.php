@@ -39,17 +39,18 @@ if ($mes) {
     $totalExtra = $repository_entrada->somarPorMes($mes);
     $extras = $repository_entrada->listarExtraPorMes($mes);
     $gastos = $repository->listarPorMes($mes);
-    $total = $repository->somarPorMes($mes);
+    $totalGasto = $repository->somarPorMes($mes);
     $gastosPorCategoria = $repository->somarPorCategoriaMes($mes);
 } else {
     $totalExtra = $repository_entrada->somar();
     $extras = $repository_entrada->listarExtra();
     $gastos = $repository->listar();
-    $total = $repository->somar();
+    $totalGasto = $repository->somar();
     $gastosPorCategoria = $repository->somarPorCategoria();
 }
 
-$saldo = $salario - $total + $totalExtra;
+$saldo = $salario - $totalGasto + $totalExtra;
+$total = $totalExtra + $salario;
 
 ?>
 
@@ -93,23 +94,27 @@ $saldo = $salario - $total + $totalExtra;
             <div class="gap-6 grid grid-cols-2">
                 <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
                         <div class="flex flex-col justify-center items-center">
-                            <div class="flex">
+                            <div class="flex gap-8">
                                 <div>
-                                    <h2 class="font-bold text-2xl">Reais</h2>
+                                    <h2 class="font-bold text-2xl">Salário</h2>
                                     <form method="post" action="">
-                                        <input name="salario" type="number" class="border-white w-4/5 p-3 border rounded-lg bg-gray-800" required value="<?= $saldo ?>">
+                                        <input name="salario" type="text" class="border-white w-4/5 p-3 border rounded-lg bg-gray-800" required value="<?= $salario ?>">
                                         <br>
                                         <input type="submit" class="w-1/3 mt-2 bg-blue-500 cursor-pointer font-bold text-lg hover:bg-blue-400 text-white py-1 rounded-lg transition">
                                     </form>
                                 </div>
                                 <div class="flex flex-col">
                                     <h2 class="text-2xl font-bold">TOTAL GASTO</h2>
-                                    <p class="text-5xl font-bold text-green-400"><?= "R$" . $total?></p>
+                                    <p class="text-3xl font-bold text-green-400"><?= "R$" . $totalGasto?></p>
+                                </div>
+                                <div class="flex flex-col">
+                                    <h2 class="text-2xl font-bold">TOTAL</h2>
+                                    <p class="text-3xl font-bold text-green-400"><?= "R$" . $total?></p>
                                 </div>
                             </div>
                             <div>
-                                <h2 class="text-2xl font-bold">Saldo</h2>
-                                <p class="text-blue-500 text-lg font-bold"><?= "R$" . $saldo - $total; ?></p>
+                                <h2 class="text-4xl font-bold">Saldo</h2>
+                                <p class="text-blue-500 text-3xl font-bold"><?= "R$" . $saldo - $totalGasto; ?></p>
                             </div>
                         </div>
                     </div>
