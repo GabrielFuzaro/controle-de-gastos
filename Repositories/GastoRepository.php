@@ -118,7 +118,7 @@ class GastoRepository
     }
 
     public function buscarPorId($id){
-        
+
     $sql = "SELECT * FROM gastos
             WHERE id = $id";
 
@@ -126,5 +126,72 @@ class GastoRepository
 
     return mysqli_fetch_assoc($resultado);
 }
+
+    public function contarGastos(){
+    $sql = "SELECT COUNT(*) AS total FROM gastos";
+
+    $resultado = mysqli_query($this->conn, $sql);
+
+    $linha = mysqli_fetch_assoc($resultado);
+
+    return $linha['total'];
+}
+
+    public function buscarMaiorGasto(){
+        $sql = "SELECT MAX(valor) AS maior FROM gastos";
+
+        $resultado = mysqli_query($this->conn, $sql);
+
+        $linha = mysqli_fetch_assoc($resultado);
+
+        return (float) $linha['maior'];
+    }
+
+    public function buscarCategoriaMaisGasta(){
+        $sql = "SELECT categoria, SUM(valor) AS total
+                FROM gastos     
+                GROUP BY categoria
+                ORDER BY total DESC
+                LIMIT 1";
+
+        $resultado = mysqli_query($this->conn, $sql);
+
+        return mysqli_fetch_assoc($resultado);
+    }
+
+    public function contarGastosMes($mes){
+        $sql = "SELECT COUNT(*) AS total FROM gastos
+                WHERE MONTH(data_gasto) = $mes";
+
+        $resultado = mysqli_query($this->conn, $sql);
+
+        $linha = mysqli_fetch_assoc($resultado);
+
+        return $linha['total'];
+    }
+
+    public function buscarMaiorGastoMes($mes){
+        $sql = "SELECT MAX(valor) AS maior FROM gastos
+                WHERE MONTH(data_gasto) = $mes";
+
+        $resultado = mysqli_query($this->conn, $sql);
+
+        $linha = mysqli_fetch_assoc($resultado);
+
+        return (float) $linha['maior'];
+    }
+
+    public function buscarCategoriaMaisGastaMes($mes){
+        $sql = "SELECT categoria, SUM(valor) AS total
+                FROM gastos
+                WHERE MONTH(data_gasto) = $mes     
+                GROUP BY categoria
+                ORDER BY total DESC
+                LIMIT 1";
+
+        $resultado = mysqli_query($this->conn, $sql);
+
+        return mysqli_fetch_assoc($resultado);
+    }
 }
 ?>

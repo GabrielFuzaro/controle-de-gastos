@@ -36,12 +36,18 @@ $meses = [
 
 
 if ($mes) {
+    $maiorGasto = $repository->buscarMaiorGastoMes($mes);
+    $categoriaMaisGasta = $repository->buscarCategoriaMaisGastaMes($mes);
+    $quantidadeDeGastos = $repository->contarGastosMes($mes);
     $totalExtra = $repository_entrada->somarPorMes($mes);
     $extras = $repository_entrada->listarExtraPorMes($mes);
     $gastos = $repository->listarPorMes($mes);
     $totalGasto = $repository->somarPorMes($mes);
     $gastosPorCategoria = $repository->somarPorCategoriaMes($mes);
 } else {
+    $maiorGasto = $repository->buscarMaiorGasto();
+    $categoriaMaisGasta = $repository->buscarCategoriaMaisGasta();
+    $quantidadeDeGastos = $repository->contarGastos();
     $totalExtra = $repository_entrada->somar();
     $extras = $repository_entrada->listarExtra();
     $gastos = $repository->listar();
@@ -233,6 +239,35 @@ $total = $totalExtra + $salario;
                                 </tbody>  
                             </table>   
                         </div>
+                    </div>
+                    <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
+                        <h2 class="text-4xl font-bold text-center mb-8">Estatísticas</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <div class="bg-gray-800 rounded-2xl p-5 border border-gray-700">
+            <p class="text-gray-400 font-bold">Quantidade de Gastos</p>
+            <p class="text-4xl font-bold text-blue-400">
+                <?= $quantidadeDeGastos ?>
+            </p>
+        </div>
+
+        <div class="bg-gray-800 rounded-2xl p-5 border border-gray-700">
+            <p class="text-gray-400 font-bold">Categoria mais Gasta</p>
+            <p class="text-2xl font-bold text-yellow-400">
+                <?= $categoriaMaisGasta['categoria'] ?? 'Nenhuma' ?>
+            </p>
+        </div>
+
+        <div class="bg-gray-800 rounded-2xl p-5 border border-gray-700">
+            <p class="text-gray-400 font-bold">Maior Gasto</p>
+            <p class="text-4xl font-bold mt-3 text-green-400">
+                R$<?= $maiorGasto ?>
+            </p>
+        </div>
+
+    </div>
+
                     </div>
             </div>
 
