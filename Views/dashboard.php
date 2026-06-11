@@ -55,8 +55,8 @@ if ($mes) {
     $gastosPorCategoria = $repository->somarPorCategoria();
 }
 
-$saldo = $salario - $totalGasto + $totalExtra;
 $total = $totalExtra + $salario;
+$saldo = $total - $totalGasto;
 
 ?>
 
@@ -120,7 +120,7 @@ $total = $totalExtra + $salario;
                             </div>
                             <div>
                                 <h2 class="text-4xl font-bold">Saldo</h2>
-                                <p class="text-blue-500 text-3xl font-bold"><?= "R$" . $saldo - $totalGasto; ?></p>
+                                <p class="text-blue-500 text-3xl font-bold"><?= "R$" . $saldo; ?></p>
                             </div>
                         </div>
                     </div>
