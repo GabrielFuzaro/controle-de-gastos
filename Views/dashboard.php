@@ -3,8 +3,10 @@ session_start();
 
 require "../config/conexao.php";
 require "../Repositories/GastoRepository.php"; 
+require "../Repositories/ExtraRepository.php";
 
 $repository = new GastoRepository($conn);
+$repository_entrada = new ExtraRepository($conn);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['salario']) && $_POST['salario'] !== '') {
@@ -12,7 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } 
 }
 
+
+
 $salario = $_SESSION['salario'] ?? 0;
+
 
 $mes = $_GET['mes'] ?? null;
 
@@ -33,10 +38,12 @@ $meses = [
 
 
 if ($mes) {
+    $extra = $repository_entrada->listarExtraPorMes($mes);
     $gastos = $repository->listarPorMes($mes);
     $total = $repository->somarPorMes($mes);
     $gastosPorCategoria = $repository->somarPorCategoriaMes($mes);
 } else {
+    $extra = $repository_entrada->listarExtra();
     $gastos = $repository->listar();
     $total = $repository->somar();
     $gastosPorCategoria = $repository->somarPorCategoria();
@@ -159,6 +166,13 @@ if ($mes) {
                                 </tbody>  
                             </table>   
                         </div>
+                    </div>
+                    <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
+                        <h2>Adicionar Valor</h2>
+                        <form method="post" action="">
+                            <input type="number" name="extra" class="border-white w-4/5 p-3 border rounded-lg bg-gray-800" required>
+                            <input type="submit" class="w-1/3 mt-2 bg-blue-500 cursor-pointer font-bold text-lg hover:bg-blue-400 text-white py-1 rounded-lg transition">
+                        </form>
                     </div>
             </div>
 
