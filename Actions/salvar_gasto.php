@@ -11,11 +11,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $valor = (float) $_POST['valor'];
     $data = $_POST['data'];
 
+    if (strlen($descricao) < 3) {
+    die("A descrição deve ter pelo menos 3 caracteres.");
+    }
+    if ($valor <= 0) {
+        die("O valor deve ser maior que zero.");
+    }
+
+    $categoriasPermitidas = [
+    'Alimentação',
+    'Transporte',
+    'Investimentos',
+    'Minhas Coisas',
+    'Presentes'
+    ];
+
+    if (!in_array($categoria, $categoriasPermitidas)) {
+        die("Categoria inválida.");
+    }
+
+    $dataValida = DateTime::createFromFormat('Y-m-d', $data);
+
+    if (!$dataValida) {
+        die("Data inválida.");
+    }
+
     $gasto = new Gasto($descricao, $categoria, $valor, $data);
 
-    $repostitory = new GastoRepository($conn);
+    $repository = new GastoRepository($conn);
 
-    if($repostitory->salvar($gasto)){
+    if($repository->salvar($gasto)){
         header("Location: ../views/cadastrar_gasto.php");
         exit;
     }

@@ -11,6 +11,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $valor = (float) $_POST['valor'];
     $data = $_POST['data'];
 
+    if (strlen($descricao) < 3) {
+    die("A descrição deve ter pelo menos 3 caracteres.");
+    }
+    if ($valor <= 0) {
+        die("O valor deve ser maior que zero.");
+    }
+
+    $dataValida = DateTime::createFromFormat('Y-m-d', $data);
+
+    if (!$dataValida) {
+        die("Data inválida.");
+    }
+
     $extra = new Extra($descricao, $valor, $data);
 
     $repostitory = new ExtraRepository($conn);
