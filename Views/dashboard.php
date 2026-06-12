@@ -201,7 +201,7 @@ $saldo = $total - $totalGasto;
                     <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
                         <h2 class="font-bold text-2xl">Gasto por categoria</h2>
                         <div class="h-auto bg-gray-900 mt-3">
-                            <table class="w-[420px] text-center">
+                            <table class="w-105 text-center">
                                 <thead>
                                     <tr>
                                         <th>Categoria</th>
