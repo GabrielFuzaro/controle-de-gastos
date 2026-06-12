@@ -47,58 +47,67 @@ class GastoRepository
 
         return (float) $linha['total'];
     }
+
     public function excluir($id){
-        $sql = "DELETE FROM gastos
-        WHERE id = $id";
+        $stmt = $this->conn->prepare("DELETE FROM gastos
+        WHERE id = ?");
 
-        $resultado = mysqli_query($this->conn, $sql);
+        $stmt->bind_param("i", $id);
 
+        $resultado = $stmt->execute();
+        
         return $resultado;
     }
 
     public function listarPorMes($mes){
 
-        $sql = "SELECT * FROM gastos
-        WHERE MONTH(data_gasto) = $mes
-        ORDER BY data_gasto DESC, id DESC";
+        $stmt = $this->conn->prepare("SELECT * FROM gastos
+        WHERE MONTH(data_gasto) = ?
+        ORDER BY data_gasto DESC, id DESC");
 
-        $resultado = mysqli_query($this->conn, $sql);
+        $stmt->bind_param("i", $mes);
+
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
 
         return $resultado->fetch_all(MYSQLI_ASSOC);
     }
 
     public function somarPorMes($mes){
-        $sql = "SELECT sum(valor) as total from gastos
-        WHERE MONTH(data_gasto) = $mes";
+        $stmt = $this->conn->prepare("SELECT sum(valor) as total from gastos
+        WHERE MONTH(data_gasto) = ? ");
 
-        $resultado = mysqli_query($this->conn, $sql);
+        $stmt->bind_param("i", $mes);
 
-        $linha = mysqli_fetch_assoc($resultado);
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
+
+        $linha = $resultado->fetch_assoc();
 
         return (float) $linha['total'];
     }
 
     public function somarPorCategoriaMes($mes){
 
-     if ($mes) {
-        $sql = "SELECT categoria, SUM(valor) AS total 
+        $stmt = $this->conn->prepare("SELECT categoria, SUM(valor) AS total 
                 FROM gastos
-                WHERE MONTH(data_gasto) = $mes
-                GROUP BY categoria";
-    } else {
-        $sql = "SELECT categoria, SUM(valor) AS total 
-                FROM gastos
-                GROUP BY categoria";
-    }
+                WHERE MONTH(data_gasto) = ?
+                GROUP BY categoria");
 
-    $resultado = mysqli_query($this->conn, $sql);
+        $stmt->bind_param("i", $mes);
 
-    return $resultado->fetch_all(MYSQLI_ASSOC);
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
+
+        return $resultado->fetch_all(MYSQLI_ASSOC);
     }
 
     public function somarPorCategoria(){
         
-        $sql = "SELECT categoria, SUM(valor) AS total 
+    $sql = "SELECT categoria, SUM(valor) AS total 
                 FROM gastos
                 GROUP BY categoria";
 
@@ -108,23 +117,27 @@ class GastoRepository
     }
 
     public function editarGasto(Gasto $gasto, $id){
-        $sql = "UPDATE gastos
-        SET descricao = '$gasto->descricao', categoria = '$gasto->categoria', valor = $gasto->valor, data_gasto = '$gasto->data_gasto'
-        WHERE id = $id";
+        $stmt = $this->conn->prepare("UPDATE gastos
+        SET descricao = ?, categoria = ?, valor = ?, data_gasto = ?
+        WHERE id = ?");
 
-        $resultado = mysqli_query($this->conn, $sql);
+        $stmt->bind_param("ssdsi", $gasto->descricao, $gasto->categoria, $gasto->valor, $gasto->data_gasto, $id);
 
-        return $resultado;
+        return $stmt->execute();
     }
 
     public function buscarPorId($id){
 
-    $sql = "SELECT * FROM gastos
-            WHERE id = $id";
+    $stmt = $this->conn->prepare("SELECT * FROM gastos
+            WHERE id = ?");
 
-    $resultado = mysqli_query($this->conn, $sql);
+    $stmt->bind_param("i", $id);
 
-    return mysqli_fetch_assoc($resultado);
+    $stmt->execute();
+
+    $resultado = $stmt->get_result();
+
+    return $resultado->fetch_assoc();
 }
 
     public function contarGastos(){
@@ -160,38 +173,52 @@ class GastoRepository
     }
 
     public function contarGastosMes($mes){
-        $sql = "SELECT COUNT(*) AS total FROM gastos
-                WHERE MONTH(data_gasto) = $mes";
+        $stmt = $this->conn->prepare("SELECT COUNT(*) AS total FROM gastos
+                WHERE MONTH(data_gasto) = ?");
 
-        $resultado = mysqli_query($this->conn, $sql);
+        $stmt->bind_param("i", $mes);
 
-        $linha = mysqli_fetch_assoc($resultado);
+        $stmt->execute();
 
-        return $linha['total'];
+        $resultado = $stmt->get_result();
+
+        $linha = $resultado->fetch_assoc();
+
+        return (int) $linha['total'];
     }
+    
 
     public function buscarMaiorGastoMes($mes){
-        $sql = "SELECT MAX(valor) AS maior FROM gastos
-                WHERE MONTH(data_gasto) = $mes";
+        $stmt = $this->conn->prepare("SELECT MAX(valor) AS maior FROM gastos
+                WHERE MONTH(data_gasto) = ?");
 
-        $resultado = mysqli_query($this->conn, $sql);
+        $stmt->bind_param("i", $mes);
 
-        $linha = mysqli_fetch_assoc($resultado);
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
+
+        $linha = $resultado->fetch_assoc();
 
         return (float) $linha['maior'];
     }
 
     public function buscarCategoriaMaisGastaMes($mes){
-        $sql = "SELECT categoria, SUM(valor) AS total
+
+        $stmt = $this->conn->prepare("SELECT categoria, SUM(valor) AS total
                 FROM gastos
-                WHERE MONTH(data_gasto) = $mes     
+                WHERE MONTH(data_gasto) = ?     
                 GROUP BY categoria
                 ORDER BY total DESC
-                LIMIT 1";
+                LIMIT 1");
 
-        $resultado = mysqli_query($this->conn, $sql);
+        $stmt->bind_param("i", $mes);
 
-        return mysqli_fetch_assoc($resultado);
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
+
+        return $resultado->fetch_assoc();
     }
 }
 ?>

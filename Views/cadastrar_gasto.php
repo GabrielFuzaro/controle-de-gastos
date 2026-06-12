@@ -19,6 +19,7 @@
                         <input class="border-white w-full p-3 border text-center rounded-lg bg-gray-800" type="text" name="descricao" required>
                         <h3>Categoria</h3>
                         <select class="bg-gray-800 w-full p-3 border border-white rounded-lg cursor-pointer" name="categoria">
+                            <option value="" selected disabled>Selecione uma categoria</option>
                             <option>Alimentação</option>
                             <option>Transporte</option>
                             <option>Investimentos</option>

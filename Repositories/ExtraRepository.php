@@ -30,11 +30,15 @@ class ExtraRepository{
     }
 
     public function listarExtraPorMes($mes){
-        $sql = "SELECT * FROM entradas
-        WHERE MONTH(data_entrada) = $mes
-        ORDER BY data_entrada DESC, id DESC";
+        $stmt = $this->conn->prepare("SELECT * FROM entradas
+        WHERE MONTH(data_entrada) = ?
+        ORDER BY data_entrada DESC, id DESC");
 
-        $resultado = mysqli_query($this->conn, $sql);
+        $stmt->bind_param("i", $mes);
+
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
 
         return $resultado->fetch_all(MYSQLI_ASSOC);
     }
@@ -50,43 +54,51 @@ class ExtraRepository{
     }
 
     public function somarPorMes($mes){
-        $sql = "SELECT sum(valor) as total from entradas
-        WHERE MONTH(data_entrada) = $mes";
+        $stmt = $this->conn->prepare("SELECT sum(valor) as total from entradas
+        WHERE MONTH(data_entrada) = ?");
 
-        $resultado = mysqli_query($this->conn, $sql);
+        $stmt->bind_param("i", $mes);
 
-        $linha = mysqli_fetch_assoc($resultado);
+        $stmt->execute();
+
+        $resultado = $stmt->get_result();
+
+        $linha = $resultado->fetch_assoc();
 
         return (float) $linha['total'];
     }
 
     public function excluir($id){
-        $sql = "DELETE FROM entradas
-        WHERE id = $id";
+        $stmt = $this->conn->prepare("DELETE FROM entradas
+        WHERE id = ?");
 
-        $resultado = mysqli_query($this->conn, $sql);
+        $stmt->bind_param("i", $id);
 
-        return $resultado;
+        return $stmt->execute();
     }
 
     public function editarExtra(Extra $extra, $id){
-        $sql = "UPDATE entradas
-        SET descricao = '$extra->descricao', valor = $extra->valor, data_entrada = '$extra->data_entrada'
-        WHERE id = $id";
+        $stmt = $this->conn->prepare("UPDATE entradas
+        SET descricao = ?, valor = ?, data_entrada = ?
+        WHERE id = ?");
 
-        $resultado = mysqli_query($this->conn, $sql);
+        $stmt->bind_param("sdsi", $extra->descricao, $extra->valor, $extra->data_entrada, $id);
 
-        return $resultado;
+        return $stmt->execute();
     }
 
     public function buscarPorId($id){
         
-    $sql = "SELECT * FROM entradas
-            WHERE id = $id";
+    $stmt = $this->conn->prepare("SELECT * FROM entradas
+            WHERE id = ?");
 
-    $resultado = mysqli_query($this->conn, $sql);
+    $stmt->bind_param("i", $id);
 
-    return mysqli_fetch_assoc($resultado);
+    $stmt->execute();
+
+    $resultado = $stmt->get_result();
+
+    return $resultado->fetch_assoc();
 }
 }
 ?>
