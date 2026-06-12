@@ -64,13 +64,13 @@ $saldo = $total - $totalGasto;
     <link href="../public/assets/css/output.css" rel="stylesheet">
     <title>View</title>
 </head>
-<body class="bg-gray-900 flex flex-col h-screen">
+<body class="bg-gray-900 flex flex-col min-h-screen">
  
     <header class="py-5">
-        <h1 class="text-white font-bold text-center text-5xl">Controle de gastos</h1>
+        <h1 class="text-white font-bold text-center text-3xl lg:text-5xl">Controle de gastos</h1>
     </header>
  
-    <main class="flex flex-1 flex-col justify-center items-center bg-gray-800 text-white">
+    <main class="flex flex-1 flex-col justify-center items-center bg-gray-800 text-white px-4 lg:px-0">
  
         <!-- FILTRO -->
         <div>
@@ -96,8 +96,8 @@ $saldo = $total - $totalGasto;
         </div>
  
         <!-- GRID PRINCIPAL -->
-        <div class="w-5/6 mt-6">
-            <div class="gap-6 grid grid-cols-2">
+        <div class="w-full lg:w-5/6 mt-6">
+            <div class="gap-6 grid grid-cols-1 lg:grid-cols-2">
  
                 <!-- COLUNA ESQUERDA -->
                 <div class="flex flex-col gap-6">
@@ -105,7 +105,7 @@ $saldo = $total - $totalGasto;
                     <!-- SALÁRIO / TOTAL / SALDO -->
                     <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
                         <div class="flex flex-col justify-center items-center">
-                            <div class="flex gap-8">
+                            <div class="flex flex-col lg:flex-row gap-8">
                                 <div>
                                     <h2 class="font-bold text-2xl">Salário</h2>
                                     <form method="post" action="">
@@ -132,7 +132,7 @@ $saldo = $total - $totalGasto;
  
                     <!-- TABELA DE GASTOS -->
                     <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
-                        <div class="h-auto bg-gray-900 mt-3">
+                        <div class="h-auto bg-gray-900 mt-3 w-full overflow-x-auto">
                             <table class="w-130 text-center">
                                 <thead>
                                     <tr>
@@ -200,7 +200,7 @@ $saldo = $total - $totalGasto;
                     <!-- GASTO POR CATEGORIA -->
                     <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
                         <h2 class="font-bold text-2xl">Gasto por categoria</h2>
-                        <div class="h-auto bg-gray-900 mt-3">
+                        <div class="h-auto bg-gray-900 mt-3 w-full overflow-x-auto">
                             <table class="w-105 text-center">
                                 <thead>
                                     <tr>
@@ -223,7 +223,7 @@ $saldo = $total - $totalGasto;
                     <!-- VALORES EXTRAS -->
                     <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
                         <h2 class="text-4xl font-bold">Valores Extras</h2>
-                        <div class="h-auto bg-gray-900 mt-3">
+                        <div class="h-auto bg-gray-900 mt-3 w-full overflow-x-auto">
                             <table class="w-110 text-center">
                                 <thead>
                                     <tr>
@@ -267,14 +267,14 @@ $saldo = $total - $totalGasto;
             </div>
  
             <!-- BOTÕES -->
-            <div class="flex justify-between w-full">
+            <div class="flex flex-col lg:flex-row justify-between w-full gap-4 mb-6">
                 <a href="./cadastrar_gasto.php">
-                    <button class="bg-gray-700 mb-5 mt-5 cursor-pointer rounded-4xl py-3 px-6 font-bold text-lg hover:bg-gray-900 text-white transition">
+                    <button class="w-full lg:w-auto bg-gray-700 mb-5 mt-5 cursor-pointer rounded-4xl py-3 px-6 font-bold text-lg hover:bg-gray-900 text-white transition">
                         Cadastrar Gasto
                     </button>
                 </a>
                 <a href="./adicionar_valor.php">
-                    <button class="bg-gray-700 mb-5 mt-5 cursor-pointer rounded-4xl py-3 px-6 font-bold text-lg hover:bg-gray-900 text-white transition">
+                    <button class="w-full lg:w-auto bg-gray-700 mb-5 mt-5 cursor-pointer rounded-4xl py-3 px-6 font-bold text-lg hover:bg-gray-900 text-white transition">
                         Adicionar Valor
                     </button>
                 </a>
