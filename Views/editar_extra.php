@@ -29,9 +29,9 @@ $extra = $repository->buscarPorId($id);
                     <form class=" gap-1.5 flex flex-col" method="post" action="../Actions/salvar_editar_extra.php">
                         <input type="hidden" name="id" value="<?= $extra['id'] ?>">
                         <h3>Descrição</h3>
-                        <input class="border-white w-full p-3 border text-center rounded-lg bg-gray-800" type="text" name="descricao" required value="<?= $extra['descricao'] ?>">
+                        <input class="border-white w-full p-3 border text-center rounded-lg bg-gray-800" minlength="2" maxlength="21" type="text" name="descricao" required value="<?= $extra['descricao'] ?>">
                         <h3>Valor</h3>
-                        <input class="border-white w-full p-3 border rounded-lg bg-gray-800" type="number" name="valor" required value="<?= $extra['valor'] ?>">
+                        <input class="border-white w-full p-3 border rounded-lg bg-gray-800" type="number" name="valor" min="0" required value="<?= $extra['valor'] ?>">
                         <h3>Data</h3>
                         <input class="border-white w-full p-3 border rounded-lg bg-gray-800 mb-3" type="date" name="data" required value="<?= $extra['data_entrada'] ?>">
                         <br>

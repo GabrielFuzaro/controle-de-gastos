@@ -109,7 +109,7 @@ $saldo = $total - $totalGasto;
                                 <div>
                                     <h2 class="font-bold text-2xl">Salário</h2>
                                     <form method="post" action="">
-                                        <input name="salario" type="text" class="border-white w-4/5 p-3 border rounded-lg bg-gray-800" required value="<?= $salario ?>">
+                                        <input name="salario" type="text" min="0" class="border-white w-4/5 p-3 border rounded-lg bg-gray-800" required value="<?= $salario ?>">
                                         <br>
                                         <input type="submit" class="w-1/3 mt-2 bg-blue-500 cursor-pointer font-bold text-lg hover:bg-blue-400 text-white py-1 rounded-lg transition">
                                     </form>

@@ -28,7 +28,7 @@ $gasto = $repository->buscarPorId($id);
                     <form class=" gap-1.5 flex flex-col" method="post" action="../Actions/salvar_editar_gasto.php">
                         <input type="hidden" name="id" value="<?= $gasto['id'] ?>">
                         <h3>Descrição</h3>
-                        <input class="border-white w-full p-3 border text-center rounded-lg bg-gray-800" type="text" name="descricao" required value="<?= $gasto['descricao'] ?>">
+                        <input class="border-white w-full p-3 border text-center rounded-lg bg-gray-800" type="text" name="descricao" minlength="2" maxlength="21" required value="<?= $gasto['descricao'] ?>">
                         <h3>Categoria</h3>
                         <select class="bg-gray-800 w-full p-3 border border-white rounded-lg cursor-pointer" name="categoria" value="<?= $gasto['categoria'] ?>">
                             <option>Alimentação</option>
@@ -38,7 +38,7 @@ $gasto = $repository->buscarPorId($id);
                             <option>Presentes</option>
                         </select>
                         <h3>Valor</h3>
-                        <input class="border-white w-full p-3 border rounded-lg bg-gray-800" type="number" name="valor" required value="<?= $gasto['valor'] ?>">
+                        <input class="border-white w-full p-3 border rounded-lg bg-gray-800" type="number" name="valor" min='0' required value="<?= $gasto['valor'] ?>">
                         <h3>Data</h3>
                         <input class="border-white w-full p-3 border rounded-lg bg-gray-800 mb-3" type="date" name="data" required value="<?= $gasto['data_gasto'] ?>">
                         <br>

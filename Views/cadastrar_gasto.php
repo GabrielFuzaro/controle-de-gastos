@@ -16,7 +16,7 @@
                 <div>
                     <form class="gap-1.5 flex flex-col w-full lg:w-auto" method="post" action="../Actions/salvar_gasto.php">
                         <h3>Descrição</h3>
-                        <input class="border-white w-full p-3 border text-center rounded-lg bg-gray-800" type="text" name="descricao" required>
+                        <input class="border-white w-full p-3 border text-center rounded-lg bg-gray-800" type="text" name="descricao" minlength="2" maxlength="21" required>
                         <h3>Categoria</h3>
                         <select class="bg-gray-800 w-full p-3 border border-white rounded-lg cursor-pointer" name="categoria">
                             <option value="" selected disabled>Selecione uma categoria</option>
@@ -27,7 +27,7 @@
                             <option>Presentes</option>
                         </select>
                         <h3>Valor</h3>
-                        <input class="border-white w-full p-3 border rounded-lg bg-gray-800" type="number" name="valor" required>
+                        <input class="border-white w-full p-3 border rounded-lg bg-gray-800" type="number" name="valor" min='0' required>
                         <h3>Data</h3>
                         <input class="border-white w-full p-3 border rounded-lg bg-gray-800 mb-3" type="date" name="data" required>
                         <br>

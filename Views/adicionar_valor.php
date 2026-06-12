@@ -16,9 +16,9 @@
                 <h2 class="text-4xl font-bold">Adicionar Valor</h2>
                 <form method="post" action="../Actions/salvar_extras.php" class="flex flex-col mt-5 w-full lg:w-auto">
                     <h3>Descrição</h3>
-                    <input type="text" name="descricao" class="border-white p-3 w-full border rounded-lg bg-gray-800" required>
+                    <input type="text" name="descricao" class="border-white p-3 w-full border rounded-lg bg-gray-800" minlength="2" maxlength="21" required>
                     <h3>Valor</h3>
-                    <input type="number" name="valor" class="border-white w-full p-3 border rounded-lg bg-gray-800" required>
+                    <input type="number" name="valor" class="border-white w-full p-3 border rounded-lg bg-gray-800" min="0" required>
                     <h3>Data</h3>
                     <input type="date" name="data_entrada" class="border-white w-full p-3 border rounded-lg bg-gray-800" required>
                     <input type="submit" class="w-1/3 mt-2 bg-blue-500 cursor-pointer font-bold text-lg hover:bg-blue-400 text-white py-1 rounded-lg transition">
