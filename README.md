@@ -1,9 +1,9 @@
 # 💰 Sistema de Controle de Gastos
 
-![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat&logo=php\&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql\&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/Tailwind-06B6D4?style=flat&logo=tailwindcss\&logoColor=white)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5\&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=flat&logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/Tailwind-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
 
 Sistema web desenvolvido em **PHP**, **MySQL** e **Tailwind CSS** para controle financeiro pessoal, permitindo o gerenciamento de gastos, entradas e acompanhamento de estatísticas financeiras em tempo real.
 
