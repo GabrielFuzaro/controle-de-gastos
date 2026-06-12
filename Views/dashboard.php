@@ -267,7 +267,7 @@ $saldo = $total - $totalGasto;
             </div>
  
             <!-- BOTÕES -->
-            <div class="flex justify-between w-5/6">
+            <div class="flex justify-between w-full">
                 <a href="./cadastrar_gasto.php">
                     <button class="bg-gray-700 mb-5 mt-5 cursor-pointer rounded-4xl py-3 px-6 font-bold text-lg hover:bg-gray-900 text-white transition">
                         Cadastrar Gasto
