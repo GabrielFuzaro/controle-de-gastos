@@ -139,16 +139,15 @@ CREATE TABLE entradas (
 ## 📸 Screenshots
 
 ### Dashboard
-
-> Adicione uma imagem do dashboard aqui.
+![Dashboard](./public/assets/img/Imagem-1-Vazia.png)
 
 ### Cadastro de Gastos
 
-> Adicione uma imagem da tela de cadastro aqui.
+![Cadastro](./public/assets/img/Cadastrar-gasto.png)
 
 ### Responsividade Mobile
 
-> Adicione uma imagem da versão mobile aqui.
+![Mobile](./public/assets/img/Mobile.png)
 
 ---
 

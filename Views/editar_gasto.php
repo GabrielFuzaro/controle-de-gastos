@@ -19,7 +19,7 @@ $gasto = $repository->buscarPorId($id);
 </head>
 <body class="bg-gray-900 flex flex-col h-screen">
     <header class="py-5">
-        <h1 class="text-white font-bold text-center text-5xl">Controle de gastos</h1>
+        <h1 class="text-white font-bold text-center text-5xl">Editar Gasto</h1>
     </header>
     <main class="flex flex-1 flex-col justify-center items-center bg-gray-800 text-white">
         <div class="w-1/3 my-5">

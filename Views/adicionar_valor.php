@@ -8,7 +8,7 @@
 </head>
 <body class="bg-gray-900 flex flex-col min-h-screen">
     <header class="py-5">
-        <h1 class="text-white font-bold text-center text-3xl lg:text-5xl">Controle de gastos</h1>
+        <h1 class="text-white font-bold text-center text-3xl lg:text-5xl">Cadastrar Valor Extra</h1>
     </header>
     <main class="flex flex-1 flex-col justify-center items-center bg-gray-800 text-white px-4 lg:px-0">
         <div class="w-full lg:w-1/3 my-5">
