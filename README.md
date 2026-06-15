@@ -139,15 +139,13 @@ CREATE TABLE entradas (
 ## 📸 Screenshots
 
 ### Dashboard
-![Dashboard](public/assets/img/Imagem-1-Vazia.png)
+![Dashboard](https://raw.githubusercontent.com/GabrielFuzaro/controle-de-gastos/main/public/assets/img/Imagem-1-Vazia.png)
 
 ### Cadastro de Gastos
-
-![Cadastro](./public/assets/img/Cadastrar-gasto.png)
+![Cadastro](https://raw.githubusercontent.com/GabrielFuzaro/controle-de-gastos/main/public/assets/img/Cadastrar-gasto.png)
 
 ### Responsividade Mobile
-
-![Mobile](./public/assets/img/Mobile.png)
+![Mobile](https://raw.githubusercontent.com/GabrielFuzaro/controle-de-gastos/main/public/assets/img/Mobile.png)
 
 ---
 
