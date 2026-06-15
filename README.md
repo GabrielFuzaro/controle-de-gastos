@@ -139,7 +139,7 @@ CREATE TABLE entradas (
 ## 📸 Screenshots
 
 ### Dashboard
-![Dashboard](./public/assets/img/Imagem-1-Vazia.png)
+![Dashboard](public/assets/img/Imagem-1-Vazia.png)
 
 ### Cadastro de Gastos
 
