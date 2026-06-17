@@ -2,6 +2,8 @@
 require_once '../config/conexao.php';
 require_once '../Repositories/GastoRepository.php';
 
+$conn = getConnection();
+
 $repository = new GastoRepository($conn);
 
 $id = $_GET['id'];

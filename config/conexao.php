@@ -1,17 +1,15 @@
 <?php 
 
-$host = "localhost";
-$usuario = "root";
-$senha = "";
-$banco = "controle_gastos";
+function getConnection(){
+    try{
+        $pdo = new PDO("mysql:host=localhost;dbname=controle_gastos;charset=utf8", "root", "");
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-$conn = new mysqli($host, $usuario, $senha, $banco);
-
-
-if ($conn->connect_error){
-    die("Erro de conexão: " . $conn->connect_error);
+        return $pdo;
+    } catch (PDOException $e){
+        die("Erro na conexão: " . $e->getMessage());
+    }
 }
-
-$conn->set_charset("utf8");
 
 ?>

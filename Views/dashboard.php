@@ -5,6 +5,8 @@ require "../config/conexao.php";
 require "../Repositories/GastoRepository.php";
 require "../Repositories/ExtraRepository.php";
  
+$conn = getConnection();
+
 $repository = new GastoRepository($conn);
 $repository_entrada = new ExtraRepository($conn);
  
@@ -184,7 +186,7 @@ $saldo = $total - $totalGasto;
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="bg-gray-800 rounded-2xl p-5 border border-gray-700">
                                 <p class="text-gray-400 font-bold">Quantidade de Gastos</p>
-                                <p class="text-4xl font-bold text-blue-400"><?= $quantidadeDeGastos ?></p>
+                                <p class="text-4xl font-bold text-blue-400"><?= $quantidadeDeGastos['total'] ?></p>
                             </div>
                             <div class="bg-gray-800 rounded-2xl p-5 border border-gray-700">
                                 <p class="text-gray-400 font-bold">Categoria mais Gasta</p>
@@ -192,7 +194,7 @@ $saldo = $total - $totalGasto;
                             </div>
                             <div class="bg-gray-800 rounded-2xl p-5 border border-gray-700">
                                 <p class="text-gray-400 font-bold">Maior Gasto</p>
-                                <p class="text-4xl font-bold mt-3 text-green-400">R$<?= $maiorGasto ?></p>
+                                <p class="text-4xl font-bold mt-3 text-green-400">R$<?= number_format($maiorGasto['maior'] ?? 0, 0) ?></p>
                             </div>
                         </div>
                     </div>

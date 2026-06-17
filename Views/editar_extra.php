@@ -2,6 +2,8 @@
 require_once '../config/conexao.php';
 require_once '../Repositories/ExtraRepository.php';
 
+$conn = getConnection();
+
 $repository = new ExtraRepository($conn);
 
 $id = $_GET['id'];

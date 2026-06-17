@@ -6,6 +6,8 @@ require_once '../Repositories/ExtraRepository.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+    $conn = getConnection();
+
     $descricao = trim($_POST['descricao']);
     $valor = (float) $_POST['valor'];
     $data = $_POST['data_entrada'];

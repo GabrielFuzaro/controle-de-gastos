@@ -3,67 +3,63 @@
 require_once __DIR__ . '/../Models/Extra.php';
 
 class ExtraRepository{
-    private $conn;
+    private PDO $conn;
 
-    public function __construct($conn){
+    public function __construct(PDO $conn){
         $this->conn = $conn;
     }
 
-    public function salvarExtra(Extra $extra){
-        $stmt= $this->conn->prepare("INSERT INTO entradas (descricao, valor, data_entrada)
-        VALUES(?, ?, ?)");
+    public function salvarExtra(Extra $extra): bool
+{
+    $stmt = $this->conn->prepare(
+        "INSERT INTO entradas (descricao, valor, data_entrada)
+         VALUES (:descricao, :valor, :data_entrada)"
+    );
 
-        $stmt->bind_param("sds",
-        $extra->descricao,
-        $extra->valor,
-        $extra->data_entrada);
+    $stmt->execute([
+        "descricao" => $extra->descricao,
+        "valor" => $extra->valor,
+        "data_entrada" => $extra->data_entrada
+    ]);
 
-        return $stmt->execute();
-    }
+    return $stmt->rowCount() > 0;
+}
 
     public function listarExtra(){
-        $sql = "SELECT * FROM entradas";
+        $stmt = $this->conn->prepare("SELECT * FROM entradas");
 
-        $resultado = mysqli_query($this->conn, $sql);
+        $stmt->execute();
 
-        return $resultado->fetch_all(MYSQLI_ASSOC);
+        return $stmt->fetchAll();
     }
 
     public function listarExtraPorMes($mes){
         $stmt = $this->conn->prepare("SELECT * FROM entradas
-        WHERE MONTH(data_entrada) = ?
+        WHERE MONTH(data_entrada) = :mes
         ORDER BY data_entrada DESC, id DESC");
 
-        $stmt->bind_param("i", $mes);
+        $stmt->execute(["mes" => $mes]);
 
-        $stmt->execute();
-
-        $resultado = $stmt->get_result();
-
-        return $resultado->fetch_all(MYSQLI_ASSOC);
+        return $stmt->fetchAll();
     }
 
     public function somar(){
-        $sql = "SELECT sum(valor) AS total from entradas;";
-
-        $resultado = mysqli_query($this->conn, $sql);
-
-        $linha = mysqli_fetch_assoc($resultado);
-
-        return (float) $linha['total'];
-    }
-
-    public function somarPorMes($mes){
-        $stmt = $this->conn->prepare("SELECT sum(valor) as total from entradas
-        WHERE MONTH(data_entrada) = ?");
-
-        $stmt->bind_param("i", $mes);
+        $stmt = $this->conn->prepare("SELECT COALESCE(sum(valor), 0) AS total from entradas;");
 
         $stmt->execute();
 
-        $resultado = $stmt->get_result();
+        $resultado = $stmt->fetch();
 
-        $linha = $resultado->fetch_assoc();
+        return (float) $resultado['total'];
+    }
+
+    public function somarPorMes($mes){
+        $stmt = $this->conn->prepare("SELECT COALESCE(sum(valor), 0) as total from entradas
+        WHERE MONTH(data_entrada) = :mes");
+
+        $stmt->execute(["mes" => $mes]);
+
+        $linha = $stmt->fetch();
 
         return (float) $linha['total'];
     }
@@ -72,19 +68,19 @@ class ExtraRepository{
         $stmt = $this->conn->prepare("DELETE FROM entradas
         WHERE id = ?");
 
-        $stmt->bind_param("i", $id);
+        $stmt->execute([$id]);
 
-        return $stmt->execute();
+        return $stmt->rowCount() > 0;
     }
 
     public function editarExtra(Extra $extra, $id){
         $stmt = $this->conn->prepare("UPDATE entradas
-        SET descricao = ?, valor = ?, data_entrada = ?
-        WHERE id = ?");
+        SET descricao = :descricao, valor = :valor, data_entrada = :data_entrada
+        WHERE id = :id");
 
-        $stmt->bind_param("sdsi", $extra->descricao, $extra->valor, $extra->data_entrada, $id);
+        $stmt->execute(["descricao" => $extra->descricao, "valor" => $extra->valor, "data_entrada" => $extra->data_entrada, "id" => $id]);
 
-        return $stmt->execute();
+        return $stmt->rowCount() > 0;
     }
 
     public function buscarPorId($id){
@@ -92,13 +88,10 @@ class ExtraRepository{
     $stmt = $this->conn->prepare("SELECT * FROM entradas
             WHERE id = ?");
 
-    $stmt->bind_param("i", $id);
+    $stmt->execute([$id]);
 
-    $stmt->execute();
-
-    $resultado = $stmt->get_result();
-
-    return $resultado->fetch_assoc();
+    return $stmt->fetch();
 }
+
 }
 ?>
