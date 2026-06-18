@@ -1,28 +1,33 @@
 <?php
 
 require_once __DIR__ . '/../Models/Gasto.php';
+require_once __DIR__ . '/RepositoryInterface.php';
+require_once __DIR__ . '/SomaTrait.php';
 
-class GastoRepository
+class GastoRepository implements RepositoryInterface
 {
-    private PDO $conn;
+    use SomaTrait;
 
     public function __construct(PDO $conn)
     {
         $this->conn = $conn;
     }
 
-    public function salvar(Gasto $gasto)
-    {
-        $stmt = $this->conn->prepare("INSERT INTO gastos (descricao, categoria, valor, data_gasto)
-            VALUES (:descricao, :categoria, :valor, :data_gasto)
-        ");
+    public function salvar(object $gasto):bool {
+            try{
+            $stmt = $this->conn->prepare("INSERT INTO gastos (descricao, categoria, valor, data_gasto)
+                VALUES (:descricao, :categoria, :valor, :data_gasto)
+            ");
 
-        $stmt->execute(["descricao" => $gasto->descricao, "categoria" => $gasto->categoria, "valor" => $gasto->valor, "data_gasto" => $gasto->data_gasto]);
+            $stmt->execute(["descricao" => $gasto->descricao, "categoria" => $gasto->categoria, "valor" => $gasto->valor, "data_gasto" => $gasto->data_gasto]);
 
-        return $stmt->rowCount() > 0;
+            return $stmt->rowCount() > 0;
+        } catch (PDOException $e){
+            return false;
+        }
     }
 
-    public function listar(){
+    public function listar():array {
 
         $stmt = $this->conn->prepare("SELECT * FROM gastos
         ORDER BY data_gasto DESC, id DESC");
@@ -33,16 +38,10 @@ class GastoRepository
     }
 
     public function somar(){
-        $stmt = $this->conn->prepare("SELECT sum(valor) AS total from gastos;");
-
-        $stmt->execute();
-
-        $linha = $stmt->fetch();
-
-        return (float) $linha['total'];
+        return $this->executarSoma("SELECT SUM(valor) AS total FROM gastos");
     }
 
-    public function excluir($id){
+    public function excluir(int $id):bool {
         $stmt = $this->conn->prepare("DELETE FROM gastos
         WHERE id = ?");
 
@@ -62,15 +61,9 @@ class GastoRepository
         return $stmt->fetchAll();
     }
 
-    public function somarPorMes($mes){
-        $stmt = $this->conn->prepare("SELECT sum(valor) as total from gastos
-        WHERE MONTH(data_gasto) = ? ");
-
-        $stmt->execute([$mes]);
-
-        $linha = $stmt->fetch();
-
-        return (float) $linha['total'];
+    public function somarPorMes(int $mes):float {
+        return $this->executarSoma("SELECT SUM(valor) AS total FROM gastos WHERE MONTH(data_gasto) = ?",
+        [$mes]);
     }
 
     public function somarPorCategoriaMes($mes){
@@ -105,7 +98,7 @@ class GastoRepository
 
     }
 
-    public function buscarPorId($id){
+    public function buscarPorId(int $id):array|false {
 
     $stmt = $this->conn->prepare("SELECT * FROM gastos
             WHERE id = ?");

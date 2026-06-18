@@ -1,15 +1,18 @@
 <?php 
 
 require_once __DIR__ . '/../Models/Extra.php';
+require_once __DIR__ . '/RepositoryInterface.php';
+require_once __DIR__ . '/SomaTrait.php';
 
-class ExtraRepository{
-    private PDO $conn;
+class ExtraRepository implements RepositoryInterface{
+
+    use SomaTrait;
 
     public function __construct(PDO $conn){
         $this->conn = $conn;
     }
 
-    public function salvarExtra(Extra $extra): bool
+    public function salvar(object $extra): bool
 {
     $stmt = $this->conn->prepare(
         "INSERT INTO entradas (descricao, valor, data_entrada)
@@ -25,7 +28,7 @@ class ExtraRepository{
     return $stmt->rowCount() > 0;
 }
 
-    public function listarExtra(){
+    public function listar():array {
         $stmt = $this->conn->prepare("SELECT * FROM entradas");
 
         $stmt->execute();
@@ -44,27 +47,15 @@ class ExtraRepository{
     }
 
     public function somar(){
-        $stmt = $this->conn->prepare("SELECT COALESCE(sum(valor), 0) AS total from entradas;");
-
-        $stmt->execute();
-
-        $resultado = $stmt->fetch();
-
-        return (float) $resultado['total'];
+        return $this->executarSoma("SELECT SUM(valor) AS total FROM entradas");
     }
 
-    public function somarPorMes($mes){
-        $stmt = $this->conn->prepare("SELECT COALESCE(sum(valor), 0) as total from entradas
-        WHERE MONTH(data_entrada) = :mes");
-
-        $stmt->execute(["mes" => $mes]);
-
-        $linha = $stmt->fetch();
-
-        return (float) $linha['total'];
+    public function somarPorMes(int $mes):float {
+         return $this->executarSoma("SELECT SUM(valor) AS total FROM entradas WHERE MONTH(data_entrada) = ?",
+        [$mes]);
     }
 
-    public function excluir($id){
+    public function excluir(int $id):bool {
         $stmt = $this->conn->prepare("DELETE FROM entradas
         WHERE id = ?");
 
@@ -83,7 +74,7 @@ class ExtraRepository{
         return $stmt->rowCount() > 0;
     }
 
-    public function buscarPorId($id){
+    public function buscarPorId(int $id):array|false {
         
     $stmt = $this->conn->prepare("SELECT * FROM entradas
             WHERE id = ?");
