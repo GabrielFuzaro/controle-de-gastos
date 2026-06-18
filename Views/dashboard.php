@@ -15,6 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['salario'] = (float) $_POST['salario'];
     }
 }
+
+function e(string $texto): string{
+    return htmlspecialchars($texto, ENT_QUOTES, 'UTF-8');
+}
  
 $salario = $_SESSION['salario'] ?? 0;
 $mes = $_GET['mes'] ?? null;
@@ -111,23 +115,23 @@ $saldo = $total - $totalGasto;
                                 <div>
                                     <h2 class="font-bold text-2xl">Salário</h2>
                                     <form method="post" action="">
-                                        <input name="salario" type="text" min="0" class="border-white w-4/5 p-3 border rounded-lg bg-gray-800" required value="<?= $salario ?>">
+                                        <input name="salario" type="number" min="0" class="border-white w-4/5 p-3 border rounded-lg bg-gray-800" required value="<?= $salario ?>">
                                         <br>
                                         <input type="submit" class="w-1/3 mt-2 bg-blue-500 cursor-pointer font-bold text-lg hover:bg-blue-400 text-white py-1 rounded-lg transition">
                                     </form>
                                 </div>
                                 <div class="flex flex-col">
                                     <h2 class="text-2xl font-bold">TOTAL GASTO</h2>
-                                    <p class="text-3xl font-bold text-green-400"><?= "R$" . $totalGasto ?></p>
+                                    <p class="text-3xl font-bold text-green-400"><?= "R$" . e($totalGasto) ?></p>
                                 </div>
                                 <div class="flex flex-col">
                                     <h2 class="text-2xl font-bold">TOTAL</h2>
-                                    <p class="text-3xl font-bold text-green-400"><?= "R$" . $total ?></p>
+                                    <p class="text-3xl font-bold text-green-400"><?= "R$" . e($total) ?></p>
                                 </div>
                             </div>
                             <div>
                                 <h2 class="text-4xl font-bold">Saldo</h2>
-                                <p class="text-blue-500 text-3xl font-bold"><?= "R$" . $saldo ?></p>
+                                <p class="text-blue-500 text-3xl font-bold"><?= "R$" . e($saldo) ?></p>
                             </div>
                         </div>
                     </div>
@@ -151,18 +155,18 @@ $saldo = $total - $totalGasto;
                                         <tr>
                                             <td class="border border-white">
                                                 <form method="post" action="../Actions/excluir_gasto.php">
-                                                    <input type="hidden" name="id" value="<?= $gasto['id'] ?>">
+                                                    <input type="hidden" name="id" value="<?= e($gasto['id']) ?>">
                                                     <button class="cursor-pointer mt-1" type="submit">
                                                         <img src="../public/assets/img/delete_24dp_EA3323_FILL0_wght400_GRAD0_opsz24.png">
                                                     </button>
                                                 </form>
                                             </td>
-                                            <td class="border border-white"><?= $gasto['descricao'] ?></td>
-                                            <td class="border border-white"><?= $gasto['categoria'] ?></td>
-                                            <td class="border border-white"><?= $gasto['valor'] ?></td>
-                                            <td class="border border-white"><?= $gasto['data_gasto'] ?></td>
+                                            <td class="border border-white"><?= e($gasto['descricao']) ?></td>
+                                            <td class="border border-white"><?= e($gasto['categoria']) ?></td>
+                                            <td class="border border-white"><?= e($gasto['valor']) ?></td>
+                                            <td class="border border-white"><?= e($gasto['data_gasto']) ?></td>
                                             <td class="border border-white">
-                                                <a href="./editar_gasto.php?id=<?= $gasto['id'] ?>">
+                                                <a href="./editar_gasto.php?id=<?= e($gasto['id']) ?>">
                                                     <button class="cursor-pointer mt-1">
                                                         <img src="../public/assets/img/edit.png">
                                                     </button>
@@ -186,15 +190,15 @@ $saldo = $total - $totalGasto;
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="bg-gray-800 rounded-2xl p-5 border border-gray-700">
                                 <p class="text-gray-400 font-bold">Quantidade de Gastos</p>
-                                <p class="text-4xl font-bold text-blue-400"><?= $quantidadeDeGastos['total'] ?></p>
+                                <p class="text-4xl font-bold text-blue-400"><?= e($quantidadeDeGastos['total'] ?? 0) ?></p>
                             </div>
                             <div class="bg-gray-800 rounded-2xl p-5 border border-gray-700">
                                 <p class="text-gray-400 font-bold">Categoria mais Gasta</p>
-                                <p class="text-2xl font-bold text-yellow-400"><?= $categoriaMaisGasta['categoria'] ?? 'Nenhuma' ?></p>
+                                <p class="text-2xl font-bold text-yellow-400"><?= e($categoriaMaisGasta['categoria'] ?? 'Nenhuma') ?></p>
                             </div>
                             <div class="bg-gray-800 rounded-2xl p-5 border border-gray-700">
                                 <p class="text-gray-400 font-bold">Maior Gasto</p>
-                                <p class="text-4xl font-bold mt-3 text-green-400">R$<?= number_format($maiorGasto['maior'] ?? 0, 0) ?></p>
+                                <p class="text-4xl font-bold mt-3 text-green-400">R$<?= number_format($maiorGasto['maior'] ?? 0, 2, ',', '.') ?></p>
                             </div>
                         </div>
                     </div>
@@ -213,8 +217,8 @@ $saldo = $total - $totalGasto;
                                 <tbody>
                                     <?php foreach ($gastosPorCategoria as $categoria): ?>
                                         <tr>
-                                            <td class="border border-white"><?= $categoria['categoria'] ?></td>
-                                            <td class="border border-white"><?= $categoria['total'] ?></td>
+                                            <td class="border border-white"><?= e($categoria['categoria']) ?></td>
+                                            <td class="border border-white"><?= e($categoria['total']) ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
@@ -241,17 +245,17 @@ $saldo = $total - $totalGasto;
                                         <tr>
                                             <td class="border border-white">
                                                 <form method="post" action="../Actions/excluir_extra.php">
-                                                    <input type="hidden" name="id" value="<?= $extra['id'] ?>">
+                                                    <input type="hidden" name="id" value="<?= e($extra['id']) ?>">
                                                     <button class="cursor-pointer mt-1" type="submit">
                                                         <img src="../public/assets/img/delete_24dp_EA3323_FILL0_wght400_GRAD0_opsz24.png">
                                                     </button>
                                                 </form>
                                             </td>
-                                            <td class="border border-white"><?= $extra['descricao'] ?></td>
-                                            <td class="border border-white"><?= $extra['valor'] ?></td>
-                                            <td class="border border-white"><?= $extra['data_entrada'] ?></td>
+                                            <td class="border border-white"><?= e($extra['descricao']) ?></td>
+                                            <td class="border border-white"><?= e($extra['valor']) ?></td>
+                                            <td class="border border-white"><?= e($extra['data_entrada']) ?></td>
                                             <td class="border border-white">
-                                                <a href="./editar_extra.php?id=<?= $extra['id'] ?>">
+                                                <a href="./editar_extra.php?id=<?= e($extra['id']) ?>">
                                                     <button class="cursor-pointer mt-1">
                                                         <img src="../public/assets/img/edit.png">
                                                     </button>
