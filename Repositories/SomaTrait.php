@@ -1,6 +1,5 @@
 <?php 
 
-
 trait SomaTrait
 {
     private PDO $conn;

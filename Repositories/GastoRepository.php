@@ -37,20 +37,24 @@ class GastoRepository implements RepositoryInterface
         return $stmt->fetchAll();
     }
 
-    public function somar(){
+    public function somar(): float{
         return $this->executarSoma("SELECT SUM(valor) AS total FROM gastos");
     }
 
     public function excluir(int $id):bool {
-        $stmt = $this->conn->prepare("DELETE FROM gastos
-        WHERE id = ?");
+        try{
+            $stmt = $this->conn->prepare("DELETE FROM gastos
+            WHERE id = ?");
 
-       $stmt->execute([$id]);
-        
-        return $stmt->rowCount() > 0;
+            $stmt->execute([$id]);
+            
+            return $stmt->rowCount() > 0;
+        }catch (PDOException $e){
+            return false;
+        }
     }
 
-    public function listarPorMes($mes){
+    public function listarPorMes($mes): array{
 
         $stmt = $this->conn->prepare("SELECT * FROM gastos
         WHERE MONTH(data_gasto) = ?
@@ -61,12 +65,12 @@ class GastoRepository implements RepositoryInterface
         return $stmt->fetchAll();
     }
 
-    public function somarPorMes(int $mes):float {
+    public function somarPorMes(int $mes): float{
         return $this->executarSoma("SELECT SUM(valor) AS total FROM gastos WHERE MONTH(data_gasto) = ?",
         [$mes]);
     }
 
-    public function somarPorCategoriaMes($mes){
+    public function somarPorCategoriaMes($mes): array{
 
         $stmt = $this->conn->prepare("SELECT categoria, SUM(valor) AS total 
                 FROM gastos
@@ -78,7 +82,7 @@ class GastoRepository implements RepositoryInterface
         return $stmt->fetchAll();
     }
 
-    public function somarPorCategoria(){
+    public function somarPorCategoria(): array{
         
         $stmt = $this->conn->prepare("SELECT categoria, SUM(valor) AS total 
                     FROM gastos
@@ -89,13 +93,16 @@ class GastoRepository implements RepositoryInterface
         return $stmt->fetchAll();
     }
 
-    public function editarGasto(Gasto $gasto, $id){
-        $stmt = $this->conn->prepare("UPDATE gastos
-        SET descricao = ?, categoria = ?, valor = ?, data_gasto = ?
-        WHERE id = ?");
+    public function editarGasto(Gasto $gasto, $id): bool{
+        try{
+            $stmt = $this->conn->prepare("UPDATE gastos
+            SET descricao = ?, categoria = ?, valor = ?, data_gasto = ?
+            WHERE id = ?");
 
-        return $stmt->execute([$gasto->descricao, $gasto->categoria, $gasto->valor, $gasto->data_gasto, $id]);
-
+            return $stmt->execute([$gasto->descricao, $gasto->categoria, $gasto->valor, $gasto->data_gasto, $id]);
+        }catch (PDOException $e){
+            return false;
+        }
     }
 
     public function buscarPorId(int $id):array|false {
@@ -108,7 +115,7 @@ class GastoRepository implements RepositoryInterface
     return $stmt->fetch();
 }
 
-    public function contarGastos(){
+    public function contarGastos(): array|false{
     $stmt = $this->conn->prepare("SELECT COUNT(*) AS total FROM gastos");
 
     $stmt->execute();
@@ -116,7 +123,7 @@ class GastoRepository implements RepositoryInterface
     return $stmt->fetch();
 }
 
-    public function buscarMaiorGasto(){
+    public function buscarMaiorGasto(): array|false {
         $stmt = $this->conn->prepare("SELECT MAX(valor) AS maior FROM gastos");
 
         $stmt->execute();
@@ -124,7 +131,7 @@ class GastoRepository implements RepositoryInterface
         return $stmt->fetch();
     }
 
-    public function buscarCategoriaMaisGasta(){
+    public function buscarCategoriaMaisGasta(): array|false{
         $stmt = $this->conn->prepare("SELECT categoria, SUM(valor) AS total
                 FROM gastos     
                 GROUP BY categoria
@@ -136,7 +143,7 @@ class GastoRepository implements RepositoryInterface
         return $stmt->fetch();
     }
 
-    public function contarGastosMes($mes){
+    public function contarGastosMes($mes): array|false{
         $stmt = $this->conn->prepare("SELECT COUNT(*) AS total FROM gastos
                 WHERE MONTH(data_gasto) = :data_gasto");
         
@@ -146,7 +153,7 @@ class GastoRepository implements RepositoryInterface
     }
     
 
-    public function buscarMaiorGastoMes($mes){
+    public function buscarMaiorGastoMes($mes): array|false{
         $stmt = $this->conn->prepare("SELECT MAX(valor) AS maior FROM gastos
                 WHERE MONTH(data_gasto) = ?");
 
@@ -155,7 +162,7 @@ class GastoRepository implements RepositoryInterface
         return $stmt->fetch();
     }
 
-    public function buscarCategoriaMaisGastaMes($mes){
+    public function buscarCategoriaMaisGastaMes($mes): array|false{
 
         $stmt = $this->conn->prepare("SELECT categoria, SUM(valor) AS total
                 FROM gastos
