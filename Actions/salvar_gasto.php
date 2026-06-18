@@ -8,10 +8,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     $conn = getConnection();
 
-    $descricao = trim($_POST['descricao']);
-    $categoria = trim($_POST['categoria']);
+    $descricao = trim($_POST['descricao'])?? '';
+    $categoria = trim($_POST['categoria'])?? '';
     $valor = (float) $_POST['valor'];
-    $data = $_POST['data'];
+    $data = $_POST['data']?? '';
 
     if (strlen($descricao) < 3) {
     die("A descrição deve ter pelo menos 3 caracteres.");
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     'Presentes'
     ];
 
-    if (!in_array($categoria, $categoriasPermitidas)) {
+    if (!in_array($categoria, $categoriasPermitidas, true)) {
         die("Categoria inválida.");
     }
 
