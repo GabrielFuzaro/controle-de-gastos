@@ -8,10 +8,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     $conn = getConnection();
 
-    $id = $_POST['id'];
-    $descricao = trim($_POST['descricao']);
+    $id = (int) ($_POST['id']?? 0);
+    $descricao = trim($_POST['descricao']?? '');
     $valor = (float) $_POST['valor'];
-    $data = $_POST['data'];
+    $data = $_POST['data']?? '';
+
+    if ($id <= 0) {
+        die("ID inválido.");
+    }
 
     if (strlen($descricao) < 3) {
     die("A descrição deve ter pelo menos 3 caracteres.");

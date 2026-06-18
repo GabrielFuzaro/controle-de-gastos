@@ -8,11 +8,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     $conn = getConnection();
 
-    $id = $_POST['id'];
-    $descricao = trim($_POST['descricao']);
-    $categoria = trim($_POST['categoria']);
+    $id = (int) ($_POST['id']?? 0);
+    $descricao = trim($_POST['descricao']?? '');
+    $categoria = trim($_POST['categoria']?? '');
     $valor = (float) $_POST['valor'];
-    $data = $_POST['data'];
+    $data = $_POST['data']?? '';
+
+    if ($id <= 0) {
+        die("ID inválido.");
+    }
 
     if (strlen($descricao) < 3) {
     die("A descrição deve ter pelo menos 3 caracteres.");
@@ -29,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     'Presentes'
     ];
 
-    if (!in_array($categoria, $categoriasPermitidas)) {
+    if (!in_array($categoria, $categoriasPermitidas, true)) {
         die("Categoria inválida.");
     }
 
@@ -41,9 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     $gasto = new Gasto($descricao, $categoria, $valor, $data);
 
-    $repostitory = new GastoRepository($conn);
+    $repository = new GastoRepository($conn);
 
-    if($repostitory->editarGasto($gasto, $id)){
+    if($repository->editarGasto($gasto, $id)){
         header("Location: ../views/dashboard.php");
         exit;
     }
