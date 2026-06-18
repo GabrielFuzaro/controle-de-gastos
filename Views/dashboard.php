@@ -48,7 +48,7 @@ if ($mes) {
     $categoriaMaisGasta  = $repository->buscarCategoriaMaisGasta();
     $quantidadeDeGastos  = $repository->contarGastos();
     $totalExtra          = $repository_entrada->somar();
-    $extras              = $repository_entrada->listarExtra();
+    $extras              = $repository_entrada->listar();
     $gastos              = $repository->listar();
     $totalGasto          = $repository->somar();
     $gastosPorCategoria  = $repository->somarPorCategoria();
@@ -202,7 +202,7 @@ $saldo = $total - $totalGasto;
                     <!-- GASTO POR CATEGORIA -->
                     <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
                         <h2 class="font-bold text-2xl">Gasto por categoria</h2>
-                        <div class="h-auto bg-gray-900 mt-3 w-full overflow-x-auto">
+                        <div class="h-auto bg-gray-900 mt-3 w-full overflow-x-auto flex justify-center">
                             <table class="w-105 text-center">
                                 <thead>
                                     <tr>
@@ -225,7 +225,7 @@ $saldo = $total - $totalGasto;
                     <!-- VALORES EXTRAS -->
                     <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
                         <h2 class="text-4xl font-bold">Valores Extras</h2>
-                        <div class="h-auto bg-gray-900 mt-3 w-full overflow-x-auto">
+                        <div class="h-auto bg-gray-900 mt-3 w-full overflow-x-auto flex justify-center">
                             <table class="w-110 text-center">
                                 <thead>
                                     <tr>

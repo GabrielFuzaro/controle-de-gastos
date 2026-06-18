@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     $repository_extra = new ExtraRepository($conn);
 
-    if($repository_extra->salvarExtra($extra)){
+    if($repository_extra->salvar($extra)){
         header("Location: ../views/dashboard.php");
         exit;
     }
