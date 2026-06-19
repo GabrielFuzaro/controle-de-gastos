@@ -176,4 +176,3 @@ class GastoRepository implements RepositoryInterface
         return $stmt->fetch();
     }
 }
-?>

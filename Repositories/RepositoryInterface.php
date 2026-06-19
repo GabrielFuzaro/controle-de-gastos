@@ -7,4 +7,3 @@ Interface RepositoryInterface{
     public function excluir(int $id): bool;
 }
 
-?>

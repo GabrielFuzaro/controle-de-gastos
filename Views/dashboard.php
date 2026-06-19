@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+if (empty($_SESSION['csrf_token'])){
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
  
 require "../config/conexao.php";
 require "../Repositories/GastoRepository.php";
@@ -122,16 +126,16 @@ $saldo = $total - $totalGasto;
                                 </div>
                                 <div class="flex flex-col">
                                     <h2 class="text-2xl font-bold">TOTAL GASTO</h2>
-                                    <p class="text-3xl font-bold text-green-400"><?= "R$" . e($totalGasto) ?></p>
+                                    <p class="text-3xl font-bold text-green-400"><?= "R$" . number_format($totalGasto, 0, ',', '.') ?></p>
                                 </div>
                                 <div class="flex flex-col">
                                     <h2 class="text-2xl font-bold">TOTAL</h2>
-                                    <p class="text-3xl font-bold text-green-400"><?= "R$" . e($total) ?></p>
+                                    <p class="text-3xl font-bold text-green-400"><?= "R$" . number_format($total, 0, ',', '.') ?></p>
                                 </div>
                             </div>
                             <div>
                                 <h2 class="text-4xl font-bold">Saldo</h2>
-                                <p class="text-blue-500 text-3xl font-bold"><?= "R$" . e($saldo) ?></p>
+                                <p class="text-blue-500 text-3xl font-bold"><?= "R$" . number_format($saldo, 2, ',', '.') ?></p>
                             </div>
                         </div>
                     </div>
@@ -156,6 +160,7 @@ $saldo = $total - $totalGasto;
                                             <td class="border border-white">
                                                 <form method="post" action="../Actions/excluir_gasto.php">
                                                     <input type="hidden" name="id" value="<?= e($gasto['id']) ?>">
+                                                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                                                     <button class="cursor-pointer mt-1" type="submit">
                                                         <img src="../public/assets/img/delete_24dp_EA3323_FILL0_wght400_GRAD0_opsz24.png">
                                                     </button>
@@ -198,7 +203,7 @@ $saldo = $total - $totalGasto;
                             </div>
                             <div class="bg-gray-800 rounded-2xl p-5 border border-gray-700">
                                 <p class="text-gray-400 font-bold">Maior Gasto</p>
-                                <p class="text-4xl font-bold mt-3 text-green-400">R$<?= number_format($maiorGasto['maior'] ?? 0, 2, ',', '.') ?></p>
+                                <p class="text-4xl font-bold mt-3 text-green-400">R$<?= number_format($maiorGasto['maior'] ?? 0, 0, ',', '.') ?></p>
                             </div>
                         </div>
                     </div>
@@ -246,6 +251,7 @@ $saldo = $total - $totalGasto;
                                             <td class="border border-white">
                                                 <form method="post" action="../Actions/excluir_extra.php">
                                                     <input type="hidden" name="id" value="<?= e($extra['id']) ?>">
+                                                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                                                     <button class="cursor-pointer mt-1" type="submit">
                                                         <img src="../public/assets/img/delete_24dp_EA3323_FILL0_wght400_GRAD0_opsz24.png">
                                                     </button>

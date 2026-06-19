@@ -16,4 +16,3 @@ function getConnection(): PDO
     return $pdo;
 }
 
-?>

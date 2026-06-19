@@ -79,4 +79,3 @@ A frase chave é:
 
 O formulário manda dados soltos. O Model transforma em objeto. O Repository salva esse objeto no banco.
  */
-?>

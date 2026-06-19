@@ -13,4 +13,3 @@ trait SomaTrait
     }
 }
 
-?>
