@@ -142,7 +142,13 @@ $saldo = $total - $totalGasto;
  
                     <!-- TABELA DE GASTOS -->
                     <div class="bg-gray-900 h-auto flex flex-col justify-center items-center px-10 py-8 rounded-3xl shadow-2xl">
-                        <div class="h-auto bg-gray-900 mt-3 w-full overflow-x-auto">
+                        <div class="flex gap-2 mb-5">
+                            <div class="font-bold text-2xl">Campo de busca:</div>
+                            <input id="buscar-gasto" class="border-white py-0 m-0 border text-center rounded-lg bg-gray-800" minlength="1" maxlength="20">
+                            <button id="limpar-busca" type="submit" class="mt-2 bg-gray-600 cursor-pointer font-bold text-lg text-center px-2 hover:bg-gray-500 text-white rounded-lg transition">Limpar</button>
+                        </div>
+                        <div id="quantidade-de-gastos" class="text-2xl font-bold text-blue-400 mb-3" style="display: none;">Gastos Encontrados: </div>
+                        <div id="mensagem-sem-gastos" class="text-2xl font-bold text-red-500 mb-3" style="display: none;">Nenhum gasto encontrado!</div>
                             <table class="w-130 text-center">
                                 <thead>
                                     <tr>
@@ -154,11 +160,11 @@ $saldo = $total - $totalGasto;
                                         <th>Editar</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tabela-gastos">
                                     <?php foreach ($gastos as $gasto): ?>
-                                        <tr>
+                                        <tr class="linha-gasto">
                                             <td class="border border-white">
-                                                <form method="post" action="../Actions/excluir_gasto.php">
+                                                <form method="post" action="../Actions/excluir_gasto.php" class="form-excluir">
                                                     <input type="hidden" name="id" value="<?= e($gasto['id']) ?>">
                                                     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                                                     <button class="cursor-pointer mt-1" type="submit">
@@ -181,7 +187,6 @@ $saldo = $total - $totalGasto;
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
-                        </div>
                     </div>
  
                 </div>
@@ -249,7 +254,7 @@ $saldo = $total - $totalGasto;
                                     <?php foreach ($extras as $extra): ?>
                                         <tr>
                                             <td class="border border-white">
-                                                <form method="post" action="../Actions/excluir_extra.php">
+                                                <form method="post" action="../Actions/excluir_extra.php" class="form-excluir">
                                                     <input type="hidden" name="id" value="<?= e($extra['id']) ?>">
                                                     <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                                                     <button class="cursor-pointer mt-1" type="submit">
@@ -299,6 +304,8 @@ $saldo = $total - $totalGasto;
     <footer class="bg-gray-900 py-1">
         <p class="text-center text-gray-400">Feito por Gabriel Fuzaro no dia 09/06/2026</p>
     </footer>
- 
+                                        
+    <script src="../public/assets/js/app.js"></script>
+
 </body>
 </html>
