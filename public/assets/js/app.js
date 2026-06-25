@@ -40,8 +40,8 @@ const formExcluir = document.querySelectorAll(".form-excluir");
         mensagemQuantidadeGastos.style.display = "block";
         mensagemQuantidadeGastos.textContent = "Gastos Encontrados: " + quantidadeDeLinhas;
     }
-
-   limparBusca.addEventListener("click", function () {
+ })
+ limparBusca.addEventListener("click", function () {
     inputBuscarGasto.value = "";
 
     linhasGasto.forEach(function (linha) {
@@ -50,7 +50,6 @@ const formExcluir = document.querySelectorAll(".form-excluir");
     mensagemSemGastos.style.display = "none";
     mensagemQuantidadeGastos.style.display = "none";
    });
- })
 
 
 
