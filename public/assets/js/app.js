@@ -2,7 +2,11 @@ const formExcluir = document.querySelectorAll(".form-excluir");
 
  formExcluir.forEach(function (formulario) {
     formulario.addEventListener("submit", function (event) {
-        const confirmar = confirm("Tem certeza que deseja excluir?");
+
+        const formTr = formulario.closest("tr")
+        const formNome = formTr.querySelector(" .form-nome")
+        const formNomeExcluir = formNome.textContent
+        const confirmar = confirm("Tem certeza que deseja excluir " + formNomeExcluir + '?');
 
         if (!confirmar) {
             event.preventDefault();

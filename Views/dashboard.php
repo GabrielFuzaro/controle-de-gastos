@@ -172,7 +172,7 @@ $saldo = $total - $totalGasto;
                                                     </button>
                                                 </form>
                                             </td>
-                                            <td class="border border-white"><?= e($gasto['descricao']) ?></td>
+                                            <td class="border border-white form-nome"><?= e($gasto['descricao']) ?></td>
                                             <td class="border border-white"><?= e($gasto['categoria']) ?></td>
                                             <td class="border border-white"><?= e($gasto['valor']) ?></td>
                                             <td class="border border-white"><?= e($gasto['data_gasto']) ?></td>
@@ -252,7 +252,7 @@ $saldo = $total - $totalGasto;
                                 </thead>
                                 <tbody>
                                     <?php foreach ($extras as $extra): ?>
-                                        <tr>
+                                        <tr id="form-tr">
                                             <td class="border border-white">
                                                 <form method="post" action="../Actions/excluir_extra.php" class="form-excluir">
                                                     <input type="hidden" name="id" value="<?= e($extra['id']) ?>">
@@ -262,7 +262,7 @@ $saldo = $total - $totalGasto;
                                                     </button>
                                                 </form>
                                             </td>
-                                            <td class="border border-white"><?= e($extra['descricao']) ?></td>
+                                            <td class="border border-white form-nome"><?= e($extra['descricao']) ?></td>
                                             <td class="border border-white"><?= e($extra['valor']) ?></td>
                                             <td class="border border-white"><?= e($extra['data_entrada']) ?></td>
                                             <td class="border border-white">
