@@ -147,8 +147,9 @@ $saldo = $total - $totalGasto;
                             <input id="buscar-gasto" class="border-white py-0 m-0 border text-center rounded-lg bg-gray-800" minlength="1" maxlength="20">
                             <button id="limpar-busca" type="submit" class="mt-2 bg-gray-600 cursor-pointer font-bold text-lg text-center px-2 hover:bg-gray-500 text-white rounded-lg transition">Limpar</button>
                         </div>
-                        <div id="quantidade-de-gastos" class="text-2xl font-bold text-blue-400 mb-3" style="display: none;">Gastos Encontrados: </div>
-                        <div id="mensagem-sem-gastos" class="text-2xl font-bold text-red-500 mb-3" style="display: none;">Nenhum gasto encontrado!</div>
+                        <div id="quantidade-de-gastos" class="text-2xl font-bold text-blue-400 mb-1" style="display: none;"></div>
+                        <div id="total-de-gastos" class="text-2xl text-white mb-3 font-bold" style="display: none;"></div>
+                        <div id="mensagem-sem-gastos" class="text-2xl font-bold text-red-500 mb-3" style="display: none;"></div>
                             <table class="w-130 text-center">
                                 <thead>
                                     <tr>
@@ -174,7 +175,7 @@ $saldo = $total - $totalGasto;
                                             </td>
                                             <td class="border border-white form-nome"><?= e($gasto['descricao']) ?></td>
                                             <td class="border border-white"><?= e($gasto['categoria']) ?></td>
-                                            <td class="border border-white"><?= e($gasto['valor']) ?></td>
+                                            <td class="border border-white form-valor"><?= e($gasto['valor']) ?></td>
                                             <td class="border border-white"><?= e($gasto['data_gasto']) ?></td>
                                             <td class="border border-white">
                                                 <a href="./editar_gasto.php?id=<?= e($gasto['id']) ?>">
